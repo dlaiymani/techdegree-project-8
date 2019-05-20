@@ -38,31 +38,101 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="20" y="438" width="374" height="20.5"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vQ5-G2-H2T">
+                                <rect key="frame" x="0.0" y="812" width="414" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tUk-Qr-dPY">
+                                        <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
+                                        <color key="backgroundColor" red="0.88833564519882202" green="0.37470656633377075" blue="0.36579030752182007" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title=" Bad" image="icn_bad"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xeW-4r-cxm">
+                                        <rect key="frame" x="138" y="0.0" width="138" height="50"/>
+                                        <color key="backgroundColor" red="0.39604109525680542" green="0.39610227942466736" blue="0.39602768421173096" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title=" Average" image="icn_average"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFq-ir-WJ8">
+                                        <rect key="frame" x="276" y="0.0" width="138" height="50"/>
+                                        <color key="backgroundColor" red="0.49411141872406006" green="0.61184269189834595" blue="0.3560977578163147" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title=" Good" image="icn_happy"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IOp-qC-V1n"/>
+                                </constraints>
+                            </stackView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="What happened today?" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mf7-FX-EZG">
+                                <rect key="frame" x="0.0" y="88" width="414" height="298.5"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOX-IX-Pk4">
+                                <rect key="frame" x="16" y="406.5" width="123" height="22"/>
+                                <state key="normal" title=" Add location" image="icn_geolocate">
+                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSY-Dh-jS3">
+                                <rect key="frame" x="283" y="406.5" width="115" height="22"/>
+                                <state key="normal" title=" Add images" image="icn_noimage_small">
+                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="📍Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgy-6C-T7d">
+                                <rect key="frame" x="16" y="551.5" width="88.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hzK-zV-ro9">
+                                <rect key="frame" x="0.0" y="588" width="414" height="224"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TmI-fV-AXb">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qen-ai-lVx">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="20" symbolic="YES" id="Tsc-yG-G1q"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="jWN-iV-94e"/>
-                            <constraint firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" constant="20" symbolic="YES" id="tHV-ZD-HQj"/>
+                            <constraint firstItem="Mf7-FX-EZG" firstAttribute="top" secondItem="VUw-jc-0yf" secondAttribute="top" id="3Rj-gc-P8K"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="hzK-zV-ro9" secondAttribute="trailing" id="DNd-hW-u3z"/>
+                            <constraint firstItem="pgy-6C-T7d" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="16" id="DXK-it-PkU"/>
+                            <constraint firstItem="wSY-Dh-jS3" firstAttribute="top" secondItem="Mf7-FX-EZG" secondAttribute="bottom" constant="20" id="IHo-Wl-KWY"/>
+                            <constraint firstItem="Mf7-FX-EZG" firstAttribute="height" secondItem="svH-Pt-448" secondAttribute="height" multiplier="1:3" id="MAW-fj-ApB"/>
+                            <constraint firstItem="hzK-zV-ro9" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" id="Q6w-Bq-m00"/>
+                            <constraint firstItem="vQ5-G2-H2T" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" id="SHC-vb-lt9"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="vQ5-G2-H2T" secondAttribute="trailing" id="ScY-JY-EbH"/>
+                            <constraint firstAttribute="trailing" secondItem="wSY-Dh-jS3" secondAttribute="trailing" constant="16" id="VIF-0v-o7w"/>
+                            <constraint firstItem="vQ5-G2-H2T" firstAttribute="top" secondItem="hzK-zV-ro9" secondAttribute="bottom" id="c7R-Sh-uaB"/>
+                            <constraint firstItem="hzK-zV-ro9" firstAttribute="height" secondItem="svH-Pt-448" secondAttribute="height" multiplier="1:4" id="cYI-hF-5T8"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="Mf7-FX-EZG" secondAttribute="trailing" id="dqF-TQ-M1t"/>
+                            <constraint firstItem="fOX-IX-Pk4" firstAttribute="top" secondItem="Mf7-FX-EZG" secondAttribute="bottom" constant="20" id="fTS-il-p7m"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="bottom" secondItem="vQ5-G2-H2T" secondAttribute="bottom" id="jzV-7B-RMf"/>
+                            <constraint firstItem="hzK-zV-ro9" firstAttribute="top" secondItem="pgy-6C-T7d" secondAttribute="bottom" constant="16" id="te4-2l-juR"/>
+                            <constraint firstItem="Mf7-FX-EZG" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" id="xSU-7e-tIp"/>
+                            <constraint firstItem="fOX-IX-Pk4" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="16" id="xyE-Nt-6WZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
-                    <connections>
-                        <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="deQ-Na-JPF"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="November 25th, 2019" id="mOI-FS-AaM"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="129"/>
+            <point key="canvasLocation" x="708.69565217391312" y="128.57142857142856"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
@@ -212,6 +282,10 @@
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.28614217040000001" green="0.64182770249999999" blue="0.75526386499999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="JEX-9P-axG" kind="relationship" relationship="rootViewController" id="GKi-kA-LjT"/>
@@ -223,8 +297,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icn_average" width="25" height="25"/>
+        <image name="icn_bad" width="25" height="25"/>
         <image name="icn_geolocate" width="17" height="17"/>
+        <image name="icn_happy" width="25" height="25"/>
         <image name="icn_noimage" width="47.5" height="47.5"/>
+        <image name="icn_noimage_small" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>
