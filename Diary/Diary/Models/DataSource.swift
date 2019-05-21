@@ -49,7 +49,7 @@ class DataSource: NSObject, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
         
         return configureCell(cell, at: indexPath)
     }
@@ -62,10 +62,12 @@ class DataSource: NSObject, UITableViewDataSource {
         
     }
     
-    private func configureCell(_ cell: UITableViewCell, at indexPath: IndexPath) -> UITableViewCell {
-        let item = fetchResultsController.object(at: indexPath)
+    private func configureCell(_ cell: NoteCell, at indexPath: IndexPath) -> NoteCell {
+        let note = fetchResultsController.object(at: indexPath)
         
-        cell.textLabel?.text = item.text
+        cell.noteDate.text = "\(note.modificationDate)"
+        cell.noteText.text = note.text
+        cell.localisationNote.text = "\(note.latitude)"
         
         return cell
     }
