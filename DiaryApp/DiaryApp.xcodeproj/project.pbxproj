@@ -14,6 +14,9 @@
 		AA37EAB52292E6A900660449 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA37EAB32292E6A900660449 /* Main.storyboard */; };
 		AA37EAB72292E6AA00660449 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA37EAB62292E6AA00660449 /* Assets.xcassets */; };
 		AA37EABA2292E6AA00660449 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA37EAB82292E6AA00660449 /* LaunchScreen.storyboard */; };
+		AA37EAC22293D03700660449 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA37EAC12293D03700660449 /* LocationController.swift */; };
+		AA37EAC62293D1D500660449 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA37EAC52293D1D500660449 /* LocationManager.swift */; };
+		AA37EAC92293D26C00660449 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA37EAC82293D26C00660449 /* Coordinate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		AA37EAB62292E6AA00660449 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA37EAB92292E6AA00660449 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA37EABB2292E6AA00660449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA37EAC12293D03700660449 /* LocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
+		AA37EAC52293D1D500660449 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		AA37EAC82293D26C00660449 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +64,10 @@
 		AA37EAA92292E6A900660449 /* DiaryApp */ = {
 			isa = PBXGroup;
 			children = (
+				AA37EAC72293D25600660449 /* Models */,
+				AA37EAC42293D1B000660449 /* Helpers */,
+				AA37EAC32293D19E00660449 /* Controllers */,
 				AA37EAAA2292E6A900660449 /* AppDelegate.swift */,
-				AA37EAAF2292E6A900660449 /* MasterViewController.swift */,
-				AA37EAB12292E6A900660449 /* DetailViewController.swift */,
 				AA37EAB32292E6A900660449 /* Main.storyboard */,
 				AA37EAB62292E6AA00660449 /* Assets.xcassets */,
 				AA37EAB82292E6AA00660449 /* LaunchScreen.storyboard */,
@@ -68,6 +75,32 @@
 				AA37EAAC2292E6A900660449 /* DiaryApp.xcdatamodeld */,
 			);
 			path = DiaryApp;
+			sourceTree = "<group>";
+		};
+		AA37EAC32293D19E00660449 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA37EAAF2292E6A900660449 /* MasterViewController.swift */,
+				AA37EAB12292E6A900660449 /* DetailViewController.swift */,
+				AA37EAC12293D03700660449 /* LocationController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AA37EAC42293D1B000660449 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AA37EAC52293D1D500660449 /* LocationManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		AA37EAC72293D25600660449 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA37EAC82293D26C00660449 /* Coordinate.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,9 +174,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA37EAC92293D26C00660449 /* Coordinate.swift in Sources */,
 				AA37EAAB2292E6A900660449 /* AppDelegate.swift in Sources */,
 				AA37EAAE2292E6A900660449 /* DiaryApp.xcdatamodeld in Sources */,
+				AA37EAC62293D1D500660449 /* LocationManager.swift in Sources */,
 				AA37EAB02292E6A900660449 /* MasterViewController.swift in Sources */,
+				AA37EAC22293D03700660449 /* LocationController.swift in Sources */,
 				AA37EAB22292E6A900660449 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

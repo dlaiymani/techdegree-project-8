@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -72,6 +72,9 @@
                                 <state key="normal" title=" Add location" image="icn_geolocate">
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Wx7-71-0bt" kind="show" id="wZf-A1-47B"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSY-Dh-jS3">
                                 <rect key="frame" x="283" y="406.5" width="115" height="22"/>
@@ -128,25 +131,53 @@
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="November 25th, 2019" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" title="November 25th, 2019" id="mOI-FS-AaM">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="iAL-GN-FKb"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="708.69565217391312" y="128.57142857142856"/>
+            <point key="canvasLocation" x="2523" y="-630"/>
         </scene>
-        <!--Split View Controller-->
-        <scene sceneID="Nki-YV-4Qg">
+        <!--Location Controller-->
+        <scene sceneID="Jeb-QS-JlR">
             <objects>
-                <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
-                    <toolbarItems/>
+                <viewController id="Wx7-71-0bt" customClass="LocationController" customModule="DiaryApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="B2l-0e-yCE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nf6-Nc-XXA">
+                                <rect key="frame" x="0.0" y="812" width="414" height="50"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Dl9-aI-z5j"/>
+                                </constraints>
+                                <state key="normal" title="Save Location"/>
+                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rCB-TJ-NTb">
+                                <rect key="frame" x="0.0" y="88" width="414" height="724"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rCB-TJ-NTb" firstAttribute="leading" secondItem="zPL-Sb-2HB" secondAttribute="leading" id="36t-ny-Gdf"/>
+                            <constraint firstItem="rCB-TJ-NTb" firstAttribute="top" secondItem="zPL-Sb-2HB" secondAttribute="top" id="LD2-cY-fyT"/>
+                            <constraint firstItem="Nf6-Nc-XXA" firstAttribute="top" secondItem="rCB-TJ-NTb" secondAttribute="bottom" id="Tds-dw-V27"/>
+                            <constraint firstItem="Nf6-Nc-XXA" firstAttribute="leading" secondItem="zPL-Sb-2HB" secondAttribute="leading" id="d7g-S0-mdT"/>
+                            <constraint firstItem="zPL-Sb-2HB" firstAttribute="trailing" secondItem="Nf6-Nc-XXA" secondAttribute="trailing" id="dGB-tO-vYx"/>
+                            <constraint firstItem="zPL-Sb-2HB" firstAttribute="trailing" secondItem="rCB-TJ-NTb" secondAttribute="trailing" id="ibz-lG-C7n"/>
+                            <constraint firstItem="zPL-Sb-2HB" firstAttribute="bottom" secondItem="Nf6-Nc-XXA" secondAttribute="bottom" id="s3s-6d-9GQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zPL-Sb-2HB"/>
+                    </view>
                     <connections>
-                        <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
-                        <segue destination="vC3-pB-5Vb" kind="relationship" relationship="detailViewController" id="Tll-UG-LXB"/>
+                        <outlet property="mapView" destination="rCB-TJ-NTb" id="kCz-d3-xh5"/>
                     </connections>
-                </splitViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cZU-Oi-B1e" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1cR-nH-MIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-856" y="-330"/>
+            <point key="canvasLocation" x="2658" y="151"/>
         </scene>
         <!--Master-->
         <scene sceneID="smW-Zh-WAh">
@@ -269,7 +300,13 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="November 29th 2019" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" title="November 29th 2019" id="Zdf-7t-Un8">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="rGP-1Q-bNz">
+                            <connections>
+                                <segue destination="Wx7-71-0bt" kind="show" id="BJq-Sn-zif"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
@@ -293,7 +330,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-45" y="129"/>
+            <point key="canvasLocation" x="1555" y="-630"/>
         </scene>
     </scenes>
     <resources>
@@ -305,7 +342,7 @@
         <image name="icn_noimage_small" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="wZf-A1-47B"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
