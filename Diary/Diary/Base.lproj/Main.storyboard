@@ -45,23 +45,32 @@
                                         <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
                                         <color key="backgroundColor" red="0.88833564519999997" green="0.37470656629999999" blue="0.36579030750000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title=" Bad" image="icn_bad"/>
+                                        <connections>
+                                            <action selector="smileyTapped:" destination="J8B-TS-dCB" eventType="touchUpInside" id="9b3-0T-8zK"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMP-oQ-80H">
                                         <rect key="frame" x="138" y="0.0" width="138" height="50"/>
                                         <color key="backgroundColor" red="0.39604109529999998" green="0.39610227939999998" blue="0.39602768420000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title=" Average" image="icn_average"/>
+                                        <connections>
+                                            <action selector="smileyTapped:" destination="J8B-TS-dCB" eventType="touchUpInside" id="zjt-rS-FuH"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gpv-Sn-bel">
                                         <rect key="frame" x="276" y="0.0" width="138" height="50"/>
                                         <color key="backgroundColor" red="0.49411141870000003" green="0.61184269189999996" blue="0.35609775780000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title=" Good" image="icn_happy"/>
+                                        <connections>
+                                            <action selector="smileyTapped:" destination="J8B-TS-dCB" eventType="touchUpInside" id="mMr-HK-bAT"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="vUB-1B-5Vp"/>
                                 </constraints>
                             </stackView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ed-X5-hgd">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What happened today?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ed-X5-hgd">
                                 <rect key="frame" x="0.0" y="88" width="414" height="298.5"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -107,6 +116,13 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Hc-bg-d4p">
+                                <rect key="frame" x="16" y="505.5" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="DfN-zT-AjA"/>
+                                    <constraint firstAttribute="width" constant="30" id="V5l-dk-tfV"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -115,12 +131,14 @@
                             <constraint firstItem="Xs1-QW-NIU" firstAttribute="top" secondItem="4ed-X5-hgd" secondAttribute="bottom" constant="20" id="781-h2-0lm"/>
                             <constraint firstItem="Snj-B3-cUe" firstAttribute="trailing" secondItem="4ed-X5-hgd" secondAttribute="trailing" id="84I-61-zUG"/>
                             <constraint firstItem="6On-vY-dur" firstAttribute="leading" secondItem="Snj-B3-cUe" secondAttribute="leading" constant="16" id="85w-YY-OAZ"/>
+                            <constraint firstItem="6On-vY-dur" firstAttribute="top" secondItem="7Hc-bg-d4p" secondAttribute="bottom" constant="16" id="MXL-jI-QwP"/>
                             <constraint firstItem="Xs1-QW-NIU" firstAttribute="leading" secondItem="Snj-B3-cUe" secondAttribute="leading" constant="16" id="NJw-Gd-Oe7"/>
                             <constraint firstItem="BFJ-pe-9Wu" firstAttribute="height" secondItem="VWA-hF-tJx" secondAttribute="height" multiplier="1:4" id="Tt4-m8-Wgn"/>
                             <constraint firstItem="4ed-X5-hgd" firstAttribute="leading" secondItem="Snj-B3-cUe" secondAttribute="leading" id="Uyf-ml-6bs"/>
                             <constraint firstItem="4ed-X5-hgd" firstAttribute="top" secondItem="Snj-B3-cUe" secondAttribute="top" id="VpB-Us-FTh"/>
                             <constraint firstItem="E7E-K1-Exs" firstAttribute="top" secondItem="BFJ-pe-9Wu" secondAttribute="bottom" id="ZjJ-he-GsQ"/>
                             <constraint firstItem="fYO-Rx-jQt" firstAttribute="top" secondItem="4ed-X5-hgd" secondAttribute="bottom" constant="20" id="ZlU-4c-fSu"/>
+                            <constraint firstItem="7Hc-bg-d4p" firstAttribute="leading" secondItem="Snj-B3-cUe" secondAttribute="leading" constant="16" id="f4T-5N-eD3"/>
                             <constraint firstItem="BFJ-pe-9Wu" firstAttribute="top" secondItem="6On-vY-dur" secondAttribute="bottom" constant="16" id="hQh-zf-3oP"/>
                             <constraint firstItem="BFJ-pe-9Wu" firstAttribute="leading" secondItem="Snj-B3-cUe" secondAttribute="leading" id="myq-3Y-gpI"/>
                             <constraint firstItem="Snj-B3-cUe" firstAttribute="trailing" secondItem="BFJ-pe-9Wu" secondAttribute="trailing" id="ozO-8q-hdb"/>
@@ -145,7 +163,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="averageButton" destination="bMP-oQ-80H" id="vFt-tJ-gxB"/>
+                        <outlet property="badButton" destination="Dnx-99-Jf4" id="iSx-Zp-QiK"/>
+                        <outlet property="goodButton" destination="Gpv-Sn-bel" id="7ID-Uu-QcY"/>
                         <outlet property="locationLabel" destination="6On-vY-dur" id="wi9-O9-OdM"/>
+                        <outlet property="smileyImageView" destination="7Hc-bg-d4p" id="a2C-TR-ArF"/>
                         <outlet property="textTextField" destination="4ed-X5-hgd" id="2b9-H9-N7v"/>
                     </connections>
                 </viewController>
@@ -168,6 +190,9 @@
                                     <constraint firstAttribute="height" constant="50" id="yyx-2m-MHD"/>
                                 </constraints>
                                 <state key="normal" title="Save Location"/>
+                                <connections>
+                                    <segue destination="EbK-4b-Mri" kind="unwind" identifier="SaveLocationSegue" unwindAction="unwindFromLocationController:" id="Gby-3S-biP"/>
+                                </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4S8-pf-1ee">
                                 <rect key="frame" x="0.0" y="88" width="414" height="724"/>
@@ -190,6 +215,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MGk-nN-PxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="EbK-4b-Mri" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2522" y="171"/>
         </scene>

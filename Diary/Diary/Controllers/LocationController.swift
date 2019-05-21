@@ -26,8 +26,8 @@ class LocationController: UIViewController {
                     if let error = error {
                         print("Unable to find address for location")
                     } else {
-                        if let placemarks = placemarks, let placemark = placemarks.first {
-                            print(placemark.locality)
+                        if let placemarks = placemarks, let placemark = placemarks.first, let name = placemark.name, let locality = placemark.locality, let adminArea = placemark.administrativeArea {
+                            self.locationDescription = "\(name), \(locality), \(adminArea)"
                         } else {
                             print("No matching address found")
                         }
@@ -37,6 +37,8 @@ class LocationController: UIViewController {
             }
         }
     }
+    
+    var locationDescription: String?
     
     var isAuthorized: Bool {
         let isAuthorizedForLocation = LocationManager.isAuthorized
@@ -71,6 +73,16 @@ class LocationController: UIViewController {
         }
     }
     
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SaveLocationSegue" {
+            let detailViewController = segue.destination as! DetailController
+            if let coordinate = coordinate {
+                detailViewController.coordinate = coordinate
+                detailViewController.locationDescription = locationDescription
+            }
+        }
+    }
     
     
     

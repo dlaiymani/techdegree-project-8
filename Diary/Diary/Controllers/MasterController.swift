@@ -20,6 +20,7 @@ class MasterController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = dataSource
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         let newButton = UIBarButtonItem(image: UIImage(named: "Icn_write"), style: .done, target: self, action: #selector(MasterController.launchDetailController))
         navigationItem.rightBarButtonItem = newButton
 

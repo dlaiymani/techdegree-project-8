@@ -46,7 +46,7 @@ class DataSource: NSObject, UITableViewDataSource {
         return section.numberOfObjects
         
     }
-    
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
@@ -56,8 +56,8 @@ class DataSource: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        let item = fetchResultsController.object(at: indexPath)
-        context.delete(item)
+        let note = fetchResultsController.object(at: indexPath)
+        context.delete(note)
         context.saveChanges()
         
     }
@@ -67,7 +67,12 @@ class DataSource: NSObject, UITableViewDataSource {
         
         cell.noteDate.text = "\(note.modificationDate)"
         cell.noteText.text = note.text
-        cell.localisationNote.text = "\(note.latitude)"
+        if let locationDescription = note.locationDescription {
+            cell.localisationNote.text = "\(locationDescription)"
+        } else {
+            cell.localisationNote.text = "No location"
+
+        }
         
         return cell
     }

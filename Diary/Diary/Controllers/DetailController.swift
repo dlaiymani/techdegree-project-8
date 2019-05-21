@@ -8,18 +8,29 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 class DetailController: UIViewController {
     
     
     @IBOutlet weak var textTextField: UITextField!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var badButton: UIButton!
+    @IBOutlet weak var averageButton: UIButton!
+    @IBOutlet weak var goodButton: UIButton!
+    @IBOutlet weak var smileyImageView: UIImageView!
     
     var managedObjectContext: NSManagedObjectContext!
+    
+    var coordinate: Coordinate?
+    var locationDescription: String?
+    var smiley: String?
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = Date().dateOfTheDay()
+        
 
     }
     
@@ -35,13 +46,43 @@ class DetailController: UIViewController {
         }
         
         let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
-        note.text = textTextField.text
-        note.modificationDate = NSDate()
-        note.longitude = -0.1337
-        note.latitude = 51.50998
-        managedObjectContext.saveChanges() // save the context on disk
         
-        dismiss(animated: true, completion: nil)
+        if let text = textTextField.text, let coordinate = coordinate, let smiley = smiley {
+            note.text = text
+            note.modificationDate = NSDate()
+            note.longitude = coordinate.longitude
+            note.latitude = coordinate.latitude
+            note.locationDescription = locationDescription
+            note.smiley = smiley
+            managedObjectContext.saveChanges() // save the context on disk
+        
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    
+    
+    @IBAction func smileyTapped(_ sender: UIButton) {
+        switch  sender {
+        case badButton:
+            smileyImageView.image = UIImage(named: "icn_bad")
+            smiley = "bad"
+        case averageButton:
+            smileyImageView.image = UIImage(named: "icn_average")
+            smiley = "average"
+        case goodButton:
+            smileyImageView.image = UIImage(named: "icn_happy")
+            smiley = "happy"
+
+        default:
+            break
+        }
+    }
+    
+    @IBAction func unwindFromLocationController(_ segue: UIStoryboardSegue) {
+        if let locationDescription = locationDescription {
+            self.locationLabel.text = "📍 \(locationDescription)"
+        }
     }
     
 }

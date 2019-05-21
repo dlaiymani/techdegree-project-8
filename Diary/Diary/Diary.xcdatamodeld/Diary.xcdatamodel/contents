@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Note" representedClassName=".Note" syncable="YES">
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="locationDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="modificationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="smiley" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
         <relationship name="photos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" syncable="YES"/>
     </entity>
@@ -11,7 +13,7 @@
         <attribute name="imageData" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Note" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="Note" positionX="-54" positionY="-9" width="128" height="150"/>
         <element name="Photo" positionX="-36" positionY="36" width="128" height="60"/>
     </elements>
 </model>
