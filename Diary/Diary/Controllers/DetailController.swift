@@ -24,7 +24,7 @@ class DetailController: UIViewController {
     
     var coordinate: Coordinate?
     var locationDescription: String?
-    var smiley: String?
+    var smiley = "none"
 
     
     override func viewDidLoad() {
@@ -47,7 +47,7 @@ class DetailController: UIViewController {
         
         let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
         
-        if let text = textTextField.text, let coordinate = coordinate, let smiley = smiley {
+        if let text = textTextField.text, let coordinate = coordinate {
             note.text = text
             note.modificationDate = NSDate()
             note.longitude = coordinate.longitude
@@ -65,14 +65,29 @@ class DetailController: UIViewController {
     @IBAction func smileyTapped(_ sender: UIButton) {
         switch  sender {
         case badButton:
-            smileyImageView.image = UIImage(named: "icn_bad")
-            smiley = "bad"
+            if smiley == "bad" {
+                smileyImageView.image = nil
+                smiley = "none"
+            } else {
+                smileyImageView.image = UIImage(named: "icn_bad")
+                smiley = "bad"
+            }
         case averageButton:
-            smileyImageView.image = UIImage(named: "icn_average")
-            smiley = "average"
+            if smiley == "average" {
+                smileyImageView.image = nil
+                smiley = "none"
+            } else {
+                smileyImageView.image = UIImage(named: "icn_average")
+                smiley = "average"
+            }
         case goodButton:
-            smileyImageView.image = UIImage(named: "icn_happy")
-            smiley = "happy"
+            if smiley == "happy" {
+                smileyImageView.image = nil
+                smiley = "none"
+            } else {
+                smileyImageView.image = UIImage(named: "icn_happy")
+                smiley = "happy"
+            }
 
         default:
             break

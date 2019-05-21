@@ -15,6 +15,7 @@ class NoteCell: UITableViewCell {
     @IBOutlet weak var noteDate: UILabel!
     @IBOutlet weak var noteText: UILabel!
     @IBOutlet weak var localisationNote: UILabel!
+    @IBOutlet weak var smileyImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -65,13 +65,29 @@ class DataSource: NSObject, UITableViewDataSource {
     private func configureCell(_ cell: NoteCell, at indexPath: IndexPath) -> NoteCell {
         let note = fetchResultsController.object(at: indexPath)
         
-        cell.noteDate.text = "\(note.modificationDate)"
+        let noteDate = note.modificationDate as Date
+        
+        cell.noteDate.text = "\(noteDate.dateOfTheDay())"
         cell.noteText.text = note.text
         if let locationDescription = note.locationDescription {
             cell.localisationNote.text = "\(locationDescription)"
         } else {
             cell.localisationNote.text = "No location"
+        }
+        
+        switch note.smiley {
+        case "bad":
+            cell.smileyImageView.image = UIImage(named: "icn_bad")
+        case "average":
+            cell.smileyImageView.image = UIImage(named: "icn_average")
+        case "happy":
+            cell.smileyImageView.image = UIImage(named: "icn_happy")
+        case "non":
+            cell.smileyImageView.image = nil
 
+        default:
+            break
+            
         }
         
         return cell
