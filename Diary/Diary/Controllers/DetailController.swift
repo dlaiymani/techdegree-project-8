@@ -29,6 +29,7 @@ class DetailController: UIViewController {
     var smiley = "none"
 
     var images: [UIImage] = []
+    @IBOutlet weak var selectedImage: UIImageView!
     
     lazy var photoPickerManager: PhotoPickerManager = {
         let manager = PhotoPickerManager(presentingViewController: self)
@@ -40,7 +41,7 @@ class DetailController: UIViewController {
         super.viewDidLoad()
         self.title = Date().dateOfTheDay()
         photosCollectionView.dataSource = self
-        
+        photosCollectionView.delegate = self
 
     }
     
@@ -161,4 +162,17 @@ extension DetailController: UICollectionViewDataSource {
         return cell
         
     }
+}
+
+extension DetailController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let image = images[indexPath.row]
+        if selectedImage.image == image {
+            selectedImage.image = UIImage(named: "icn_noimage_small")
+        } else {
+            selectedImage.image = image
+        }
+    }
+    
 }
