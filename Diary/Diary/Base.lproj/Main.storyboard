@@ -90,6 +90,9 @@
                                 <state key="normal" title=" Add images" image="icn_noimage_small">
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="launchCamera:" destination="J8B-TS-dCB" eventType="touchUpInside" id="R78-DH-tVG"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="📍Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6On-vY-dur">
                                 <rect key="frame" x="16" y="551.5" width="88.5" height="20.5"/>
@@ -158,7 +161,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="cKm-fE-5vE">
                             <connections>
-                                <action selector="save:" destination="J8B-TS-dCB" id="iBq-v7-oQ0"/>
+                                <action selector="save:" destination="J8B-TS-dCB" id="aTU-YZ-xhO"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -167,6 +170,7 @@
                         <outlet property="badButton" destination="Dnx-99-Jf4" id="iSx-Zp-QiK"/>
                         <outlet property="goodButton" destination="Gpv-Sn-bel" id="7ID-Uu-QcY"/>
                         <outlet property="locationLabel" destination="6On-vY-dur" id="wi9-O9-OdM"/>
+                        <outlet property="photosCollectionView" destination="BFJ-pe-9Wu" id="IQc-EQ-fOl"/>
                         <outlet property="smileyImageView" destination="7Hc-bg-d4p" id="a2C-TR-ArF"/>
                         <outlet property="textTextField" destination="4ed-X5-hgd" id="2b9-H9-N7v"/>
                     </connections>
@@ -223,10 +227,10 @@
         <scene sceneID="wQ2-vD-TTY">
             <objects>
                 <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="mI0-8E-qEe" customClass="MasterController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="QAg-U3-LYL">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="QAg-U3-LYL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="q06-0h-qaG">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -258,12 +262,15 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record your thoughts for today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R47-Gg-soo">
-                                    <rect key="frame" x="95.5" y="80" width="245" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                    <color key="textColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Quick note" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vy9-PR-KMR">
+                                    <rect key="frame" x="95.5" y="84" width="74" height="17"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <action selector="returnTapped:" destination="mI0-8E-qEe" eventType="primaryActionTriggered" id="ZyG-bH-BvZ"/>
+                                    </connections>
+                                </textField>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -271,19 +278,17 @@
                                 <constraint firstItem="P57-1N-aqB" firstAttribute="top" secondItem="q06-0h-qaG" secondAttribute="top" id="5xV-mf-a9G"/>
                                 <constraint firstItem="g5x-6X-OZ6" firstAttribute="top" secondItem="P57-1N-aqB" secondAttribute="bottom" constant="19" id="6KW-sm-glJ"/>
                                 <constraint firstItem="P57-1N-aqB" firstAttribute="leading" secondItem="q06-0h-qaG" secondAttribute="leading" id="ALu-GO-93i"/>
-                                <constraint firstAttribute="trailing" secondItem="R47-Gg-soo" secondAttribute="trailing" constant="73.5" id="EKV-Fc-rMP"/>
-                                <constraint firstItem="R47-Gg-soo" firstAttribute="bottom" secondItem="g5x-6X-OZ6" secondAttribute="bottom" id="Ese-9M-QPC"/>
                                 <constraint firstItem="CK9-6R-573" firstAttribute="leading" secondItem="g5x-6X-OZ6" secondAttribute="trailing" constant="32" id="QgL-1b-yOc"/>
-                                <constraint firstAttribute="bottom" secondItem="g5x-6X-OZ6" secondAttribute="bottom" constant="19" id="R1R-CE-qfG"/>
                                 <constraint firstItem="CK9-6R-573" firstAttribute="top" secondItem="g5x-6X-OZ6" secondAttribute="top" id="SE3-db-3k7"/>
                                 <constraint firstItem="g5x-6X-OZ6" firstAttribute="leading" secondItem="q06-0h-qaG" secondAttribute="leading" constant="16" id="brw-ql-e3l"/>
+                                <constraint firstItem="Vy9-PR-KMR" firstAttribute="bottom" secondItem="g5x-6X-OZ6" secondAttribute="bottom" id="iEP-k5-N6J"/>
                                 <constraint firstAttribute="trailing" secondItem="P57-1N-aqB" secondAttribute="trailing" id="irP-oa-qCb"/>
-                                <constraint firstItem="R47-Gg-soo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g5x-6X-OZ6" secondAttribute="trailing" symbolic="YES" id="pFG-IF-plE"/>
+                                <constraint firstItem="Vy9-PR-KMR" firstAttribute="leading" secondItem="CK9-6R-573" secondAttribute="leading" id="oqh-TU-bIc"/>
                             </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NoteCell" rowHeight="120" id="Nu0-rw-QWV" customClass="NoteCell" customModule="Diary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="148" width="414" height="120"/>
+                                <rect key="frame" x="0.0" y="175.5" width="414" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nu0-rw-QWV" id="O1w-ic-uuk">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="119.5"/>
@@ -363,10 +368,13 @@
                             <outlet property="delegate" destination="mI0-8E-qEe" id="k5O-sS-VW9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="November 29th 2019" id="2BH-Kc-Vcj">
+                    <navigationItem key="navigationItem" title="Diary" id="2BH-Kc-Vcj">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="HZT-A5-Ib2"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="dateOfTheDay" destination="CK9-6R-573" id="uSs-zS-m1l"/>
+                        <outlet property="quickNote" destination="Vy9-PR-KMR" id="yHR-Gw-2fL"/>
+                        <outlet property="topView" destination="q06-0h-qaG" id="zRG-NV-P98"/>
                         <segue destination="N3y-t5-Qeh" kind="show" identifier="NewNoteSegue" id="cW9-oD-rlo"/>
                     </connections>
                 </tableViewController>

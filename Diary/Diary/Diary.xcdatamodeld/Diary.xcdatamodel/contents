@@ -4,7 +4,7 @@
         <attribute name="latitude" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="locationDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="modificationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="modificationDate" attributeType="String" syncable="YES"/>
         <attribute name="smiley" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
         <relationship name="photos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" syncable="YES"/>

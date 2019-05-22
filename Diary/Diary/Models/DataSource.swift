@@ -34,8 +34,13 @@ class DataSource: NSObject, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return fetchResultsController.sections?.count ?? 0
+        if let sections = fetchResultsController.sections {
+            return sections.count
+        }
+        
+        return 0
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -57,17 +62,48 @@ class DataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         let note = fetchResultsController.object(at: indexPath)
+        
+//        if self.fetchResultsController.sections?[indexPath.section].numberOfObjects == 1 {
+//            let indexSet = IndexSet(integer: indexPath.section)
+//            print(indexSet)
+//            self.tableView.deleteSections(indexSet, with: .fade)
+//        }
+//        print(self.fetchResultsController.sections?[indexPath.section].numberOfObjects)
+//
+//        print(indexPath.section)
+//        self.tableView.beginUpdates()
+//        if self.fetchResultsController.sections?[indexPath.section].numberOfObjects == 1 {
+//            let indexSet = IndexSet(integer: indexPath.section)
+//            print(indexSet)
+//            self.tableView.deleteSections(indexSet, with: .fade)
+//        } else {
+//            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//        }
+//        self.tableView.endUpdates()
+
         context.delete(note)
         context.saveChanges()
+       // self.tableView.deleteRows(at: [indexPath], with: .automatic)
+
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let section = fetchResultsController.sections?[section] else {
+            return nil
+        }
+        
+        return section.name
         
     }
+    
+    
+    
     
     private func configureCell(_ cell: NoteCell, at indexPath: IndexPath) -> NoteCell {
         let note = fetchResultsController.object(at: indexPath)
         
-        let noteDate = note.modificationDate as Date
         
-        cell.noteDate.text = "\(noteDate.dateOfTheDay())"
+        cell.noteDate.text = "\(note.modificationDate)"
         cell.noteText.text = note.text
         if let locationDescription = note.locationDescription {
             cell.localisationNote.text = "\(locationDescription)"
@@ -82,7 +118,7 @@ class DataSource: NSObject, UITableViewDataSource {
             cell.smileyImageView.image = UIImage(named: "icn_average")
         case "happy":
             cell.smileyImageView.image = UIImage(named: "icn_happy")
-        case "non":
+        case "none":
             cell.smileyImageView.image = nil
 
         default:

@@ -20,6 +20,8 @@ class DetailController: UIViewController {
     @IBOutlet weak var goodButton: UIButton!
     @IBOutlet weak var smileyImageView: UIImageView!
     
+    @IBOutlet weak var photosCollectionView: UICollectionView!
+    
     var managedObjectContext: NSManagedObjectContext!
     
     var coordinate: Coordinate?
@@ -27,12 +29,27 @@ class DetailController: UIViewController {
     var smiley = "none"
 
     
+    lazy var photoPickerManager: PhotoPickerManager = {
+        let manager = PhotoPickerManager(presentingViewController: self)
+        manager.delegate = self
+        return manager
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = Date().dateOfTheDay()
+      //  photosCollectionView.dataSource =
         
 
     }
+    
+    
+    
+    @IBAction func launchCamera(_ sender: Any) {
+        photoPickerManager.presentPhotoPicker(animated: true)
+    }
+    
+    
     
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -48,8 +65,11 @@ class DetailController: UIViewController {
         let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
         
         if let text = textTextField.text, let coordinate = coordinate {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             note.text = text
-            note.modificationDate = NSDate()
+            note.modificationDate = dateFormatter.string(from: Date())
             note.longitude = coordinate.longitude
             note.latitude = coordinate.latitude
             note.locationDescription = locationDescription
@@ -98,6 +118,26 @@ class DetailController: UIViewController {
         if let locationDescription = locationDescription {
             self.locationLabel.text = "📍 \(locationDescription)"
         }
+    }
+    
+}
+
+
+extension DetailController: PhotoPickerManagerDelegate {
+    
+    func manager(_ manager: PhotoPickerManager, didPickImage image: UIImage) {
+        
+        //        let _ = Photo.with(image, in: context)
+        //        context.saveChanges()
+        
+//        manager.dismissPhotoPicker(animated: true) {
+//            guard let photoFilterController = self.storyboard?.instantiateViewController(withIdentifier: "PhotoFilterController") as? PhotoFilterController else { return }
+//
+//            photoFilterController.photo = image
+//            photoFilterController.managedObjectContext = self.context
+//            let navController = UINavigationController(rootViewController: photoFilterController)
+//            self.navigationController?.present(navController, animated: true, completion: nil)
+//        }
     }
     
 }

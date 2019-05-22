@@ -13,6 +13,10 @@ class MasterController: UITableViewController {
     
     let managedObjectContext = CoreDataStack().managedObjectContext
     
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var quickNote: UITextField!
+    @IBOutlet weak var dateOfTheDay: UILabel!
+    
     lazy var dataSource: DataSource = {
         return DataSource(tableView: self.tableView, context: self.managedObjectContext)
     }()
@@ -23,6 +27,7 @@ class MasterController: UITableViewController {
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         let newButton = UIBarButtonItem(image: UIImage(named: "Icn_write"), style: .done, target: self, action: #selector(MasterController.launchDetailController))
         navigationItem.rightBarButtonItem = newButton
+        dateOfTheDay.text = Date().dateOfTheDay()
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
@@ -61,6 +66,33 @@ class MasterController: UITableViewController {
             addNoteController.managedObjectContext = self.managedObjectContext
         }
             
+    }
+    
+    @IBAction func returnTapped(_ sender: UITextField) {
+        guard let text = quickNote.text, !text.isEmpty else {
+            return
+        }
+        
+        let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
+        
+        if let text = quickNote.text {
+            note.text = text
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+            note.text = text
+           // note.modificationDate = dateFormatter.string(from: Date())
+            note.modificationDate = "Wednsday, May 22, 2019"
+            note.longitude = 0.0
+            note.latitude = 0.0
+            note.locationDescription = "No location"
+            note.smiley = "none"
+            managedObjectContext.saveChanges() // save the context on disk
+            
+            quickNote.text = nil
+            quickNote.placeholder = "Quick note"
+            sender.resignFirstResponder()
+          //  dismiss(animated: true, completion: nil)
+        }
     }
     
 
