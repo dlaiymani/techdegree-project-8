@@ -28,6 +28,7 @@ class DetailController: UIViewController {
     var locationDescription: String?
     var smiley = "none"
 
+    var images: [UIImage] = []
     
     lazy var photoPickerManager: PhotoPickerManager = {
         let manager = PhotoPickerManager(presentingViewController: self)
@@ -38,7 +39,7 @@ class DetailController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = Date().dateOfTheDay()
-      //  photosCollectionView.dataSource =
+        photosCollectionView.dataSource = self
         
 
     }
@@ -130,14 +131,34 @@ extension DetailController: PhotoPickerManagerDelegate {
         //        let _ = Photo.with(image, in: context)
         //        context.saveChanges()
         
-//        manager.dismissPhotoPicker(animated: true) {
-//            guard let photoFilterController = self.storyboard?.instantiateViewController(withIdentifier: "PhotoFilterController") as? PhotoFilterController else { return }
-//
-//            photoFilterController.photo = image
+        manager.dismissPhotoPicker(animated: true) {
+
+            self.images.append(image)
+            self.photosCollectionView.reloadData()
+         //   self.dismiss(animated: true, completion: nil)
+            
 //            photoFilterController.managedObjectContext = self.context
 //            let navController = UINavigationController(rootViewController: photoFilterController)
 //            self.navigationController?.present(navController, animated: true, completion: nil)
-//        }
+        }
     }
     
+}
+
+
+
+extension DetailController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(images.count)
+        return images.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
+        
+        cell.image.image = images[indexPath.row]
+        
+        return cell
+        
+    }
 }

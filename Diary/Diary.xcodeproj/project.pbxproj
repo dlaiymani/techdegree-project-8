@@ -29,6 +29,7 @@
 		AA9D479A22941287002C5419 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9D479922941287002C5419 /* NoteCell.swift */; };
 		AA9D479C22941F27002C5419 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9D479B22941F27002C5419 /* Date+Extension.swift */; };
 		AA9D479E2295223C002C5419 /* PhotoPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9D479D2295223C002C5419 /* PhotoPickerManager.swift */; };
+		AA9D47A0229527D6002C5419 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9D479F229527D6002C5419 /* ImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		AA9D479922941287002C5419 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AA9D479B22941F27002C5419 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		AA9D479D2295223C002C5419 /* PhotoPickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerManager.swift; sourceTree = "<group>"; };
+		AA9D479F229527D6002C5419 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				AA37EAED2293F97600660449 /* Coordinate.swift */,
 				AA9D477C2293FF95002C5419 /* DataSource.swift */,
 				AA9D478A229404A2002C5419 /* Photo.swift */,
+				AA9D479F229527D6002C5419 /* ImageCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				AA9D478922940431002C5419 /* Note+CoreDataProperties.swift in Sources */,
 				AA9D478322940109002C5419 /* CoreDataStack.swift in Sources */,
 				AA37EAD92293F8E900660449 /* AppDelegate.swift in Sources */,
+				AA9D47A0229527D6002C5419 /* ImageCell.swift in Sources */,
 				AA9D477D2293FF95002C5419 /* DataSource.swift in Sources */,
 				AA9D479E2295223C002C5419 /* PhotoPickerManager.swift in Sources */,
 				AA37EAF92293FBA800660449 /* Diary.xcdatamodeld in Sources */,
