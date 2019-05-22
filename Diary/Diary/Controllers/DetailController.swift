@@ -42,6 +42,9 @@ class DetailController: UIViewController {
         self.title = Date().dateOfTheDay()
         photosCollectionView.dataSource = self
         photosCollectionView.delegate = self
+        
+        selectedImage.layer.cornerRadius = selectedImage.frame.height/2
+        selectedImage.clipsToBounds = true
 
     }
     
