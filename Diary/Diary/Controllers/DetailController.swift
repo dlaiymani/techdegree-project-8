@@ -65,8 +65,11 @@ class DetailController: UIViewController {
                 self.smiley = smiley
                 displaySmiley()
             }
-            if let photo = note.photos {
-                images.append(photo.image)
+            if let photos = note.photos {
+                //images.append(photo.image)
+                for photo in photos {
+                    images.append(photo.image)
+                }
             }
             photosCollectionView.reloadData()
         }
@@ -106,7 +109,17 @@ class DetailController: UIViewController {
             self.note?.setValue(locationDescription, forKey: "locationDescription")
             self.note?.setValue(smiley, forKey: "smiley")
             if images.count > 0 {
-                self.note?.setValue(Photo.withImage(images[0], in: managedObjectContext), forKey: "photos")
+                
+                var savedPhotos: [Photo] = []
+                for image in images {
+                    savedPhotos.append(Photo.withImage(image, in: managedObjectContext))
+                }
+                
+                self.note?.setValue(Set(savedPhotos), forKey: "photos")
+               // self.note?.setValue(Note.with(self.note!, images: images, in: managedObjectContext), forKey: "photos")
+                
+              //  self.note?.setValue(Photo.withImages(images, in: managedObjectContext), forKey: "photos")
+              //  self.note?.setValue(Photo.withImage(images[0], in: managedObjectContext), forKey: "photos")
             } else {
                 self.note?.setValue(nil, forKey: "photos")
             }
@@ -123,7 +136,12 @@ class DetailController: UIViewController {
                 note.locationDescription = locationDescription
                 note.smiley = smiley
                 if images.count > 0 {
-                    note.photos = Photo.withImage(images[0], in: managedObjectContext)
+                    var savedPhotos: [Photo] = []
+                    for image in images {
+                        savedPhotos.append(Photo.withImage(image, in: managedObjectContext))
+                    }
+                    note.photos = Set(savedPhotos)
+                    //note.photos = Photo.withImage(images[0], in: managedObjectContext
                 } else {
                     self.note?.setValue(nil, forKey: "photos")
                 }

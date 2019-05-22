@@ -35,5 +35,15 @@ extension Photo {
         return photo
     }
     
+    @nonobjc class func withImages(_ images: [UIImage], in context: NSManagedObjectContext) -> [Photo] {
+        var photos = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: context) as! [Photo]
+        
+        for image in images {
+            let photo = Photo.withImage(image, in: context)
+            photos.append(photo)
+        }
+        return photos
+    }
+    
 
 }

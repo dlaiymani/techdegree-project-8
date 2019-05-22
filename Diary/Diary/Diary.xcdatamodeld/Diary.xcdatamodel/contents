@@ -7,7 +7,7 @@
         <attribute name="modificationDate" attributeType="String" syncable="YES"/>
         <attribute name="smiley" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
-        <relationship name="photos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" syncable="YES"/>
     </entity>
     <entity name="Photo" representedClassName=".Photo" syncable="YES">
         <attribute name="imageData" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
