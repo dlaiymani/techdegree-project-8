@@ -7,16 +7,33 @@
 //
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 
 extension Photo {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Photo> {
-        return NSFetchRequest<Photo>(entityName: "Photo")
+        let request = NSFetchRequest<Photo>(entityName: "Photo")
+        request.sortDescriptors = [NSSortDescriptor(key: "imageData", ascending: true)]
+
+        return request
     }
 
-    @NSManaged public var imageData: NSData?
+    @NSManaged public var imageData: NSData
+    
+}
+
+extension Photo {
+    var image: UIImage {
+        return UIImage(data: self.imageData as Data)!
+    }
+    
+    @nonobjc class func withImage(_ image: UIImage, in context: NSManagedObjectContext) -> Photo {
+        let photo = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: context) as! Photo
+        photo.imageData = image.jpegData(compressionQuality: 1.0) as! NSData
+        return photo
+    }
+    
 
 }

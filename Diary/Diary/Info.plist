@@ -43,5 +43,7 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use your data to geoloclized your notes</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera for your notes</string>
 </dict>
 </plist>

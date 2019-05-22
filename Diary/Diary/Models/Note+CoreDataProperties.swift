@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 extension Note {
@@ -21,14 +22,32 @@ extension Note {
         return request
     }
     
-    
 
-    @NSManaged public var latitude: Double
+    @NSManaged public var latitude: Double // can figure out to put these properties optional
     @NSManaged public var longitude: Double
     @NSManaged public var modificationDate: String
     @NSManaged public var text: String
-    @NSManaged public var locationDescription: String?
+    @NSManaged public var locationDescription: String
     @NSManaged public var smiley: String?
     @NSManaged public var photos: Photo?
 
+}
+
+extension Note {
+    
+    class func with(_ note: Note, photo: UIImage, in context: NSManagedObjectContext) -> Note {
+        let newNote = NSEntityDescription.insertNewObject(forEntityName: "Note", into: context) as! Note
+        
+        newNote.latitude = note.latitude
+        newNote.longitude = note.longitude
+        newNote.modificationDate = note.modificationDate
+        newNote.text = note.text
+        newNote.locationDescription = note.locationDescription
+        newNote.smiley = note.smiley
+       // newNote.photos = Photo.withImage(photo, in: context)
+       
+        return newNote
+    }
+    
+    
 }

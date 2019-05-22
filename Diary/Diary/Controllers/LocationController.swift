@@ -38,7 +38,7 @@ class LocationController: UIViewController {
         }
     }
     
-    var locationDescription: String?
+    var locationDescription = "📍 No Location"
     
     var isAuthorized: Bool {
         let isAuthorizedForLocation = LocationManager.isAuthorized

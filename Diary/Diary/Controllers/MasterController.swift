@@ -39,10 +39,14 @@ class MasterController: UITableViewController {
 //        note.longitude = 0.0
 //        note.latitude = 0.0
         
-        managedObjectContext.saveChanges()
+      //  managedObjectContext.saveChanges()
 
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
     
     @objc func launchDetailController() {
         performSegue(withIdentifier: "NewNoteSegue", sender: self)
@@ -64,6 +68,16 @@ class MasterController: UITableViewController {
             let addNoteController = navigatioController.topViewController as! DetailController
             
             addNoteController.managedObjectContext = self.managedObjectContext
+            addNoteController.update = false
+        } else if segue.identifier == "showDetail" {
+            let navigatioController = segue.destination as! UINavigationController
+            let updateNoteController = navigatioController.topViewController as! DetailController
+            updateNoteController.update = true
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let note = dataSource.object(at: indexPath)
+                updateNoteController.note = note
+                updateNoteController.managedObjectContext = self.managedObjectContext
+            }
         }
             
     }
@@ -81,12 +95,14 @@ class MasterController: UITableViewController {
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             note.text = text
            // note.modificationDate = dateFormatter.string(from: Date())
-            note.modificationDate = "Wednsday, May 22, 2019"
+            note.modificationDate = "Thursday, May 23, 2019"
             note.longitude = 0.0
             note.latitude = 0.0
-            note.locationDescription = "No location"
+            note.locationDescription = "📍 No location"
             note.smiley = "none"
+            note.photos = nil
             managedObjectContext.saveChanges() // save the context on disk
+         //   tableView.reloadData()
             
             quickNote.text = nil
             quickNote.placeholder = "Quick note"

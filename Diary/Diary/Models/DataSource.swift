@@ -62,53 +62,34 @@ class DataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         let note = fetchResultsController.object(at: indexPath)
-        
-//        if self.fetchResultsController.sections?[indexPath.section].numberOfObjects == 1 {
-//            let indexSet = IndexSet(integer: indexPath.section)
-//            print(indexSet)
-//            self.tableView.deleteSections(indexSet, with: .fade)
-//        }
-//        print(self.fetchResultsController.sections?[indexPath.section].numberOfObjects)
-//
-//        print(indexPath.section)
-//        self.tableView.beginUpdates()
-//        if self.fetchResultsController.sections?[indexPath.section].numberOfObjects == 1 {
-//            let indexSet = IndexSet(integer: indexPath.section)
-//            print(indexSet)
-//            self.tableView.deleteSections(indexSet, with: .fade)
-//        } else {
-//            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-//        }
-//        self.tableView.endUpdates()
-
         context.delete(note)
         context.saveChanges()
-       // self.tableView.deleteRows(at: [indexPath], with: .automatic)
-
+        tableView.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let section = fetchResultsController.sections?[section] else {
-            return nil
-        }
-        
-        return section.name
-        
-    }
-    
-    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        guard let section = fetchResultsController.sections?[section] else {
+//            return nil
+//        }
+//        
+//        return section.name
+//        
+//    }
     
     
     private func configureCell(_ cell: NoteCell, at indexPath: IndexPath) -> NoteCell {
         let note = fetchResultsController.object(at: indexPath)
         
-        
         cell.noteDate.text = "\(note.modificationDate)"
         cell.noteText.text = note.text
-        if let locationDescription = note.locationDescription {
-            cell.localisationNote.text = "\(locationDescription)"
+        cell.localisationNote.text = "\(note.locationDescription)"
+        
+        cell.noteImageView.layer.cornerRadius = cell.noteImageView.frame.height/2
+        cell.noteImageView.clipsToBounds = true
+        if let photo = note.photos {
+            cell.noteImageView.image = photo.image
         } else {
-            cell.localisationNote.text = "No location"
+            cell.noteImageView.image = UIImage(named: "icn_noimage")
         }
         
         switch note.smiley {

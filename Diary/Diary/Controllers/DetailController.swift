@@ -24,12 +24,22 @@ class DetailController: UIViewController {
     
     var managedObjectContext: NSManagedObjectContext!
     
-    var coordinate: Coordinate?
-    var locationDescription: String?
+    var coordinate = Coordinate(latitude: 0.0, longitude: 0.0)
+    var locationDescription = "📍 No Location"
     var smiley = "none"
+    
+    var update:Bool = false
+    
+    var note: Note?
 
     var images: [UIImage] = []
     @IBOutlet weak var selectedImage: UIImageView!
+    
+    lazy var dataSource: PhotosDataSource = {
+        let request: NSFetchRequest<Photo> = Photo.fetchRequest()
+        return PhotosDataSource(fetchRequest: request, managedObjectContext: self.managedObjectContext, collectionView: self.photosCollectionView)
+    }()
+
     
     lazy var photoPickerManager: PhotoPickerManager = {
         let manager = PhotoPickerManager(presentingViewController: self)
@@ -37,11 +47,29 @@ class DetailController: UIViewController {
         return manager
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = Date().dateOfTheDay()
         photosCollectionView.dataSource = self
         photosCollectionView.delegate = self
+        locationLabel.text = locationDescription
+        
+        if let note = note {
+            textTextField.text = note.text
+            locationLabel.text = note.locationDescription
+                
+            self.coordinate = Coordinate(latitude: note.latitude, longitude: note.longitude)
+            if let smiley = note.smiley {
+                self.smiley = smiley
+                displaySmiley()
+            }
+            if let photo = note.photos {
+                images.append(photo.image)
+            }
+            photosCollectionView.reloadData()
+        }
         
         selectedImage.layer.cornerRadius = selectedImage.frame.height/2
         selectedImage.clipsToBounds = true
@@ -50,10 +78,11 @@ class DetailController: UIViewController {
     
     
     
+    
+    
     @IBAction func launchCamera(_ sender: Any) {
         photoPickerManager.presentPhotoPicker(animated: true)
     }
-    
     
     
     @IBAction func cancel(_ sender: Any) {
@@ -62,30 +91,64 @@ class DetailController: UIViewController {
 
     
     @IBAction func save(_ sender: Any) {
-        
         guard let text = textTextField.text, !text.isEmpty else {
             return
         }
         
-        let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
         
-        if let text = textTextField.text, let coordinate = coordinate {
+        if update {
+            self.note?.setValue(text, forKey: "text")
+            self.note?.setValue(dateFormatter.string(from: Date()), forKey: "modificationDate")
+            self.note?.setValue(coordinate.latitude, forKey: "latitude")
+            self.note?.setValue(coordinate.longitude, forKey: "longitude")
+            self.note?.setValue(locationDescription, forKey: "locationDescription")
+            self.note?.setValue(smiley, forKey: "smiley")
+            if images.count > 0 {
+                self.note?.setValue(Photo.withImage(images[0], in: managedObjectContext), forKey: "photos")
+            } else {
+                self.note?.setValue(nil, forKey: "photos")
+            }
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-            note.text = text
-            note.modificationDate = dateFormatter.string(from: Date())
-            note.longitude = coordinate.longitude
-            note.latitude = coordinate.latitude
-            note.locationDescription = locationDescription
-            note.smiley = smiley
-            managedObjectContext.saveChanges() // save the context on disk
+        } else {
         
-            dismiss(animated: true, completion: nil)
+            let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
+            
+            if let text = textTextField.text {
+                note.text = text
+                note.modificationDate = dateFormatter.string(from: Date())
+                note.longitude = coordinate.longitude
+                note.latitude = coordinate.latitude
+                note.locationDescription = locationDescription
+                note.smiley = smiley
+                if images.count > 0 {
+                    note.photos = Photo.withImage(images[0], in: managedObjectContext)
+                } else {
+                    self.note?.setValue(nil, forKey: "photos")
+                }
+            }
         }
+        managedObjectContext.saveChanges() 
+        
+        dismiss(animated: true, completion: nil)
     }
     
     
+    func displaySmiley() {
+        switch smiley {
+        case "bad":
+            smileyImageView.image = UIImage(named: "icn_bad")
+        case "average":
+            smileyImageView.image = UIImage(named: "icn_average")
+        case "happy":
+            smileyImageView.image = UIImage(named: "icn_happy")
+        case "none":
+            smileyImageView.image = nil
+        default:
+            break
+        }
+    }
     
     @IBAction func smileyTapped(_ sender: UIButton) {
         switch  sender {
@@ -120,30 +183,22 @@ class DetailController: UIViewController {
     }
     
     @IBAction func unwindFromLocationController(_ segue: UIStoryboardSegue) {
-        if let locationDescription = locationDescription {
             self.locationLabel.text = "📍 \(locationDescription)"
-        }
     }
-    
 }
 
 
 extension DetailController: PhotoPickerManagerDelegate {
     
     func manager(_ manager: PhotoPickerManager, didPickImage image: UIImage) {
-        
-        //        let _ = Photo.with(image, in: context)
-        //        context.saveChanges()
-        
         manager.dismissPhotoPicker(animated: true) {
 
+//            let photo = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: self.context) as! Photo
+//            photo.imageData = image.pngData() as! NSData
+//            self.context.saveChanges()
+            
             self.images.append(image)
             self.photosCollectionView.reloadData()
-         //   self.dismiss(animated: true, completion: nil)
-            
-//            photoFilterController.managedObjectContext = self.context
-//            let navController = UINavigationController(rootViewController: photoFilterController)
-//            self.navigationController?.present(navController, animated: true, completion: nil)
         }
     }
     
@@ -156,12 +211,12 @@ extension DetailController: UICollectionViewDataSource {
         print(images.count)
         return images.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-        
+
         cell.image.image = images[indexPath.row]
-        
+
         return cell
         
     }

@@ -17,4 +17,9 @@ struct Coordinate {
         self.latitude = location.coordinate.latitude
         self.longitude = location.coordinate.longitude
     }
+    
+    init(latitude: Double, longitude: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 }
