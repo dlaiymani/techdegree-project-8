@@ -21,6 +21,11 @@ class PhotosDataSource: NSObject, UICollectionViewDataSource {
         self.fetchedResultsController.delegate = self
     }
     
+    
+    func object(at indexPath: IndexPath) -> Photo {
+        return fetchedResultsController.object(at: indexPath)
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }

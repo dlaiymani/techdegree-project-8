@@ -30,26 +30,27 @@ extension Note {
     @NSManaged public var locationDescription: String
     @NSManaged public var smiley: String?
     @NSManaged public var photos: Set<Photo>?
+    @NSManaged public var mainPhoto: Photo?
 
 }
 
 extension Note {
     
-    class func with(_ text: String, coordinate: Coordinate, modificationDate: String, locationDescription: String, smiley: String, images: [UIImage], in context: NSManagedObjectContext) -> Note {
-        let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: context) as! Note
-        
-        note.latitude = coordinate.latitude
-        note.longitude = coordinate.longitude
-        note.modificationDate = modificationDate
-        note.text = text
-        note.locationDescription = locationDescription
-        note.smiley = smiley
-        for image in images {
-            let photo = Photo.withImage(image, in: context)
-            note.photos?.insert(photo)
-        }
-        return note
-    }
+//    class func with(_ text: String, coordinate: Coordinate, modificationDate: String, locationDescription: String, smiley: String, images: [UIImage], in context: NSManagedObjectContext) -> Note {
+//        let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: context) as! Note
+//        
+//        note.latitude = coordinate.latitude
+//        note.longitude = coordinate.longitude
+//        note.modificationDate = modificationDate
+//        note.text = text
+//        note.locationDescription = locationDescription
+//        note.smiley = smiley
+//        for image in images {
+//            let photo = Photo.withImage(image, in: context)
+//            note.photos?.insert(photo)
+//        }
+//        return note
+//    }
     
     
 }

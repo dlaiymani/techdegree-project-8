@@ -86,11 +86,23 @@ class DataSource: NSObject, UITableViewDataSource {
         
         cell.noteImageView.layer.cornerRadius = cell.noteImageView.frame.height/2
         cell.noteImageView.clipsToBounds = true
-        if let photo = note.photos {
-            cell.noteImageView.image = photo.first?.image
-        } else {
-            cell.noteImageView.image = UIImage(named: "icn_noimage")
+        cell.noteImageView.image = UIImage(named: "icn_noimage")
+        if let photos = note.photos {
+            print(photos.count)
+            for photo in photos {
+                if photo.isMainPhoto {
+                    print("yolo")
+                    cell.noteImageView.image = photo.image
+                }
+            }
         }
+        
+        
+//        if let photo = note.photos {
+//            cell.noteImageView.image = photo.first?.image
+//        } else {
+//            cell.noteImageView.image = UIImage(named: "icn_noimage")
+//        }
         
         switch note.smiley {
         case "bad":

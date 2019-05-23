@@ -21,7 +21,8 @@ extension Photo {
     }
 
     @NSManaged public var imageData: NSData
-    
+    @NSManaged public var isMainPhoto: Bool
+
 }
 
 extension Photo {
@@ -29,21 +30,22 @@ extension Photo {
         return UIImage(data: self.imageData as Data)!
     }
     
-    @nonobjc class func withImage(_ image: UIImage, in context: NSManagedObjectContext) -> Photo {
+    @nonobjc class func withImage(_ image: UIImage, isMainPhoto: Bool, in context: NSManagedObjectContext) -> Photo {
         let photo = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: context) as! Photo
         photo.imageData = image.jpegData(compressionQuality: 1.0) as! NSData
+        photo.isMainPhoto = isMainPhoto
         return photo
     }
     
-    @nonobjc class func withImages(_ images: [UIImage], in context: NSManagedObjectContext) -> [Photo] {
-        var photos = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: context) as! [Photo]
-        
-        for image in images {
-            let photo = Photo.withImage(image, in: context)
-            photos.append(photo)
-        }
-        return photos
-    }
+//    @nonobjc class func withImages(_ images: [UIImage], in context: NSManagedObjectContext) -> [Photo] {
+//        var photos = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: context) as! [Photo]
+//        
+//        for image in images {
+//            let photo = Photo.withImage(image, in: context)
+//            photos.append(photo)
+//        }
+//        return photos
+//    }
     
 
 }

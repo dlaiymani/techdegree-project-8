@@ -65,7 +65,7 @@ class NoteFetchResultsController: NSFetchedResultsController<Note>, NSFetchedRes
             tableView.deleteRows(at: [indexPath], with: .automatic)
         case .update, .move:
             guard let indexPath = indexPath else { return }
-       //     tableView.reloadRows(at: [indexPath], with: .automatic)
+           tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
     
