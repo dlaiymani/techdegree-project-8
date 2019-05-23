@@ -66,10 +66,10 @@ class DetailController: UIViewController {
             locationLabel.text = note.locationDescription
             
             self.coordinate = Coordinate(latitude: note.latitude, longitude: note.longitude)
-            if let smiley = note.smiley {
-                self.smiley = smiley
-                displaySmiley()
-            }
+            smiley = note.smiley
+            print(smiley)
+            displaySmiley()
+            
             if let photos = note.photos {
                 for photo in photos {
                     dataSource.appendData(photo.image)
@@ -113,21 +113,17 @@ class DetailController: UIViewController {
             note.latitude = coordinate.latitude
             note.locationDescription = locationDescription
             note.smiley = smiley
+            print(smiley)
             if dataSource.numberOfElements() > 0 {
                 var savedPhotos: [Photo] = []
                 for image in dataSource.data {
-                    var resizedImage = image
-                    if !update {
-                        let imageWidth = image.size.width
-                        let imageHeight = image.size.height
-                        let size = CGSize(width: imageWidth*0.25, height: imageHeight*0.25)
-                        guard let image = image.resized(to: size) else { return }
-                        resizedImage = image
-                    }
-                    if image == selectedImage.image {
-                        savedPhotos.append(Photo.withImage(resizedImage, isMainPhoto: true, in: managedObjectContext))
+                    let pngImage = image.pngData()
+                    let pngSelectedImage = selectedImage.image?.pngData()
+                    
+                    if pngImage == pngSelectedImage {
+                        savedPhotos.append(Photo.withImage(image, isMainPhoto: true, in: managedObjectContext))
                     } else {
-                        savedPhotos.append(Photo.withImage(resizedImage, isMainPhoto: false, in: managedObjectContext))
+                        savedPhotos.append(Photo.withImage(image, isMainPhoto: false, in: managedObjectContext))
                     }
                 }
                 note.photos = Set(savedPhotos)
@@ -182,7 +178,8 @@ class DetailController: UIViewController {
                 smiley = "happy"
             }
         default:
-            break
+            smileyImageView.image = nil
+            smiley = "none"
         }
     }
     
@@ -197,9 +194,14 @@ extension DetailController: PhotoPickerManagerDelegate {
     func manager(_ manager: PhotoPickerManager, didPickImage image: UIImage) {
         manager.dismissPhotoPicker(animated: true) {
             
-            self.dataSource.appendData(image)
+            let imageWidth = image.size.width
+            let imageHeight = image.size.height
+            let size = CGSize(width: imageWidth*0.25, height: imageHeight*0.25)
+            guard let resizedImage = image.resized(to: size) else { return }
             
-            self.managedObjectContext.saveChanges()
+            self.dataSource.appendData(resizedImage)
+            
+           // self.managedObjectContext.saveChanges()
             
             self.photosCollectionView.reloadData()
             

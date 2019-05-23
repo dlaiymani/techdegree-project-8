@@ -28,7 +28,7 @@ extension Note {
     @NSManaged public var modificationDate: String
     @NSManaged public var text: String
     @NSManaged public var locationDescription: String
-    @NSManaged public var smiley: String?
+    @NSManaged public var smiley: String
     @NSManaged public var photos: Set<Photo>?
     @NSManaged public var mainPhoto: Photo?
 

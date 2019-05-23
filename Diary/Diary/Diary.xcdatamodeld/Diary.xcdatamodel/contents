@@ -5,7 +5,7 @@
         <attribute name="locationDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="modificationDate" attributeType="String" syncable="YES"/>
-        <attribute name="smiley" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="smiley" attributeType="String" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photo" syncable="YES"/>
     </entity>

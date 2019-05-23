@@ -67,6 +67,7 @@ class MasterController: UITableViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let note = dataSource.object(at: indexPath)
                 updateNoteController.note = note
+                print(note.smiley)
                 updateNoteController.managedObjectContext = self.managedObjectContext
             }
         }
