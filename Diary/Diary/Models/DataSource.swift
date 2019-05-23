@@ -67,15 +67,6 @@ class DataSource: NSObject, UITableViewDataSource {
         tableView.reloadData()
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        guard let section = fetchResultsController.sections?[section] else {
-//            return nil
-//        }
-//        
-//        return section.name
-//        
-//    }
-    
     
     private func configureCell(_ cell: NoteCell, at indexPath: IndexPath) -> NoteCell {
         let note = fetchResultsController.object(at: indexPath)
@@ -88,38 +79,33 @@ class DataSource: NSObject, UITableViewDataSource {
         cell.noteImageView.clipsToBounds = true
         cell.noteImageView.image = UIImage(named: "icn_noimage")
         if let photos = note.photos {
-            print(photos.count)
             for photo in photos {
                 if photo.isMainPhoto {
-                    print("yolo")
                     cell.noteImageView.image = photo.image
                 }
             }
         }
         
-        
-//        if let photo = note.photos {
-//            cell.noteImageView.image = photo.first?.image
-//        } else {
-//            cell.noteImageView.image = UIImage(named: "icn_noimage")
-//        }
-        
+        cell.smileyImageView.image = smileyImage(forNote: note)
+
+        return cell
+    }
+    
+    // MARK: - Helpers
+    
+    func smileyImage(forNote note: Note) -> UIImage? {
         switch note.smiley {
         case "bad":
-            cell.smileyImageView.image = UIImage(named: "icn_bad")
+            return UIImage(named: "icn_bad")
         case "average":
-            cell.smileyImageView.image = UIImage(named: "icn_average")
+            return UIImage(named: "icn_average")
         case "happy":
-            cell.smileyImageView.image = UIImage(named: "icn_happy")
+            return UIImage(named: "icn_happy")
         case "none":
-            cell.smileyImageView.image = nil
-
+            return nil
         default:
-            break
-            
+            return nil
         }
-        
-        return cell
     }
     
 }

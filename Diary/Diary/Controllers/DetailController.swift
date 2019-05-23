@@ -32,15 +32,12 @@ class DetailController: UIViewController {
     
     var note: Note?
 
-    var dataSource: [UIImage] = []
+   // var dataSource: [UIImage] = []
     @IBOutlet weak var selectedImage: UIImageView!
     
-    
-//    lazy var dataSource: PhotosDataSource = {
-//        let request: NSFetchRequest<Photo> = Photo.fetchRequest()
-//        return PhotosDataSource(fetchRequest: request, managedObjectContext: self.managedObjectContext, collectionView: self.photosCollectionView)
-//    }()
-
+    lazy var dataSource: PhotoDataSource = {
+        return PhotoDataSource(data: [], collectionView: self.photosCollectionView)
+    }()
     
     lazy var photoPickerManager: PhotoPickerManager = {
         let manager = PhotoPickerManager(presentingViewController: self)
@@ -49,18 +46,25 @@ class DetailController: UIViewController {
     }()
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = Date().dateOfTheDay()
-        photosCollectionView.dataSource = self
+        photosCollectionView.dataSource = dataSource
         photosCollectionView.delegate = self
+        configureView()
+        
+        selectedImage.layer.cornerRadius = selectedImage.frame.height/2
+        selectedImage.clipsToBounds = true
+    }
+    
+    
+    func configureView() {
         locationLabel.text = locationDescription
         
         if let note = note {
             textTextField.text = note.text
             locationLabel.text = note.locationDescription
-                
+            
             self.coordinate = Coordinate(latitude: note.latitude, longitude: note.longitude)
             if let smiley = note.smiley {
                 self.smiley = smiley
@@ -68,20 +72,15 @@ class DetailController: UIViewController {
             }
             if let photos = note.photos {
                 for photo in photos {
-                    dataSource.append(photo.image)
+                    dataSource.appendData(photo.image)
                     if photo.isMainPhoto {
                         selectedImage.image = photo.image
                     }
                 }
             }
             photosCollectionView.reloadData()
-            
         }
-        
-        selectedImage.layer.cornerRadius = selectedImage.frame.height/2
-        selectedImage.clipsToBounds = true
     }
-    
     
     @IBAction func launchCamera(_ sender: Any) {
         photoPickerManager.presentPhotoPicker(animated: true)
@@ -102,75 +101,41 @@ class DetailController: UIViewController {
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
         
         if update {
-            
             managedObjectContext.delete(self.note!)
-//            self.note?.setValue(text, forKey: "text")
-//            self.note?.setValue(dateFormatter.string(from: Date()), forKey: "modificationDate")
-//            self.note?.setValue(coordinate.latitude, forKey: "latitude")
-//            self.note?.setValue(coordinate.longitude, forKey: "longitude")
-//            self.note?.setValue(locationDescription, forKey: "locationDescription")
-//            self.note?.setValue(smiley, forKey: "smiley")
-//
-//            var savedPhotos: [Photo] = []
-//            for image in dataSource {
-//                if image == selectedImage.image {
-//                    savedPhotos.append(Photo.withImage(image, isMainPhoto: true, in: managedObjectContext))
-//                } else {
-//                    savedPhotos.append(Photo.withImage(image, isMainPhoto: false, in: managedObjectContext))
-//                }
-//            }
-//            self?.note.setValue(Set(savedPhotos), forKet: "photos")
-            
-//            if images.count > 0 {
-//
-//                var savedPhotos: [Photo] = []
-//                for image in images {
-//                    if image == selectedImage.image {
-//                        savedPhotos.append(Photo.withImage(image, isMainPhoto: true, in: managedObjectContext))
-//                    } else {
-//                        savedPhotos.append(Photo.withImage(image, isMainPhoto: false, in: managedObjectContext))
-//                    }
-//                }
-//
-//                self.note?.setValue(Set(savedPhotos), forKey: "photos")
-//
-//            } else {
-//                self.note?.setValue(nil, forKey: "photos")
-//            }
-            
         }
-            let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
-            
-            if let text = textTextField.text {
-                note.text = text
-                note.modificationDate = dateFormatter.string(from: Date())
-                note.longitude = coordinate.longitude
-                note.latitude = coordinate.latitude
-                note.locationDescription = locationDescription
-                note.smiley = smiley
-                if dataSource.count > 0 {
-                    print(dataSource.count)
-
-                    var savedPhotos: [Photo] = []
-                    for image in dataSource {
-                        if image == selectedImage.image {
-                            savedPhotos.append(Photo.withImage(image, isMainPhoto: true, in: managedObjectContext))
-                        } else {
-                            savedPhotos.append(Photo.withImage(image, isMainPhoto: false, in: managedObjectContext))
-                        }
+        
+        let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
+        
+        if let text = textTextField.text {
+            note.text = text
+            note.modificationDate = dateFormatter.string(from: Date())
+            note.longitude = coordinate.longitude
+            note.latitude = coordinate.latitude
+            note.locationDescription = locationDescription
+            note.smiley = smiley
+            if dataSource.numberOfElements() > 0 {
+                var savedPhotos: [Photo] = []
+                for image in dataSource.data {
+                    var resizedImage = image
+                    if !update {
+                        let imageWidth = image.size.width
+                        let imageHeight = image.size.height
+                        let size = CGSize(width: imageWidth*0.25, height: imageHeight*0.25)
+                        guard let image = image.resized(to: size) else { return }
+                        resizedImage = image
                     }
-                    note.photos = Set(savedPhotos)
-//                    if let mainImage = selectedImage.image {
-//                        note.mainPhoto = Photo.withImage(mainImage, in: managedObjectContext)
-//                    }
-                    //note.photos = Photo.withImage(images[0], in: managedObjectContext
-                } else {
-                    note.photos = nil
+                    if image == selectedImage.image {
+                        savedPhotos.append(Photo.withImage(resizedImage, isMainPhoto: true, in: managedObjectContext))
+                    } else {
+                        savedPhotos.append(Photo.withImage(resizedImage, isMainPhoto: false, in: managedObjectContext))
+                    }
                 }
+                note.photos = Set(savedPhotos)
+            } else {
+                note.photos = nil
             }
-        
-        managedObjectContext.saveChanges() 
-        
+        }
+        managedObjectContext.saveChanges()
         dismiss(animated: true, completion: nil)
     }
     
@@ -216,7 +181,6 @@ class DetailController: UIViewController {
                 smileyImageView.image = UIImage(named: "icn_happy")
                 smiley = "happy"
             }
-
         default:
             break
         }
@@ -233,13 +197,10 @@ extension DetailController: PhotoPickerManagerDelegate {
     func manager(_ manager: PhotoPickerManager, didPickImage image: UIImage) {
         manager.dismissPhotoPicker(animated: true) {
             
-           // let photo = Photo.withImage(image, isMainPhoto: true, in: self.managedObjectContext)
-          //  self.note?.photos?.insert(photo)
-            self.dataSource.append(image)
+            self.dataSource.appendData(image)
             
             self.managedObjectContext.saveChanges()
             
-          //  self.images.append(photo)
             self.photosCollectionView.reloadData()
             
         }
@@ -248,38 +209,11 @@ extension DetailController: PhotoPickerManagerDelegate {
 }
 
 
-
-extension DetailController: UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-
-        cell.image.image = dataSource[indexPath.row]
-
-        return cell
-        
-    }
-}
-
 extension DetailController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       // let image = images[indexPath.row]
         
-        let photo = dataSource[indexPath.row]
-        
-//        note?.photos?.remove(photo)
-//        photo.isMainPhoto = true
-//        note?.photos?.insert(photo)
-       // photo.setValue(true, forKey: "isMainPhoto")
-      //  managedObjectContext.saveChanges()
+        let photo = dataSource.object(at: indexPath)
         
         if selectedImage.image == photo {
             selectedImage.image = UIImage(named: "icn_noimage_small")

@@ -31,15 +31,6 @@ class MasterController: UITableViewController {
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
-        
-        // Add a fake note
-//        let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
-//        note.text = "Hello note"
-//        note.modificationDate = NSDate()
-//        note.longitude = 0.0
-//        note.latitude = 0.0
-        
-      //  managedObjectContext.saveChanges()
 
     }
     
@@ -94,20 +85,17 @@ class MasterController: UITableViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             note.text = text
-           // note.modificationDate = dateFormatter.string(from: Date())
-            note.modificationDate = "Thursday, May 23, 2019"
+            note.modificationDate = dateFormatter.string(from: Date())
             note.longitude = 0.0
             note.latitude = 0.0
             note.locationDescription = "📍 No location"
             note.smiley = "none"
             note.photos = nil
-            managedObjectContext.saveChanges() // save the context on disk
-         //   tableView.reloadData()
+            managedObjectContext.saveChanges()
             
             quickNote.text = nil
             quickNote.placeholder = "Quick note"
             sender.resignFirstResponder()
-          //  dismiss(animated: true, completion: nil)
         }
     }
     
