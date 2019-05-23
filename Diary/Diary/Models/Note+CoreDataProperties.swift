@@ -22,6 +22,16 @@ extension Note {
         return request
     }
     
+    @nonobjc  class func fetchRequestWithText(_ text: String) -> NSFetchRequest<Note> {
+        
+        let request = NSFetchRequest<Note>(entityName: "Note")
+        
+        let predicate  = NSPredicate(format: "text CONTAINS[c] %@", text)
+        request.predicate = predicate
+        request.sortDescriptors = [NSSortDescriptor(key: "modificationDate", ascending: true)]
+        
+        return request
+    }
 
     @NSManaged public var latitude: Double // can figure out to put these properties optional
     @NSManaged public var longitude: Double

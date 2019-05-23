@@ -17,7 +17,7 @@ class DataSource: NSObject, UITableViewDataSource {
     
     lazy var fetchResultsController: NoteFetchResultsController = {
         
-        return NoteFetchResultsController(managedObjectContext: self.context, tableView: self.tableView)
+        return NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: self.context, tableView: self.tableView)
     }()
     
     init(tableView: UITableView, context: NSManagedObjectContext) {

@@ -15,10 +15,11 @@ class NoteFetchResultsController: NSFetchedResultsController<Note>, NSFetchedRes
     private let tableView: UITableView
     private var nbOfSections = 0
     
-    init(managedObjectContext: NSManagedObjectContext, tableView: UITableView) {
+    init(fetchRequest: NSFetchRequest<Note>, managedObjectContext: NSManagedObjectContext, tableView: UITableView) {
         self.tableView = tableView
         
-        super.init(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        //Note.fetchRequest()
+        super.init(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
         self.delegate = self
         

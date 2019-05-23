@@ -17,6 +17,8 @@ class MasterController: UITableViewController {
     @IBOutlet weak var quickNote: UITextField!
     @IBOutlet weak var iconQuickNote: UIImageView!
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     lazy var dataSource: DataSource = {
         return DataSource(tableView: self.tableView, context: self.managedObjectContext)
     }()
@@ -27,6 +29,7 @@ class MasterController: UITableViewController {
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         let newButton = UIBarButtonItem(image: UIImage(named: "Icn_write"), style: .done, target: self, action: #selector(MasterController.launchDetailController))
         navigationItem.rightBarButtonItem = newButton
+        setupSearchBar()
 
         iconQuickNote.layer.cornerRadius = iconQuickNote.frame.height/2
         iconQuickNote.clipsToBounds = true
@@ -44,6 +47,14 @@ class MasterController: UITableViewController {
     @objc func launchDetailController() {
         performSegue(withIdentifier: "NewNoteSegue", sender: self)
     
+    }
+    
+    func setupSearchBar() {
+        self.navigationItem.titleView = searchController.searchBar
+        
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchResultsUpdater = self
     }
 
     // MARK: - UITableViewDelegate
@@ -100,6 +111,31 @@ class MasterController: UITableViewController {
             sender.resignFirstResponder()
         }
     }
-    
-
 }
+
+extension MasterController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchTerm = searchController.searchBar.text else { return }
+        
+        if !searchTerm.isEmpty {
+            dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequestWithText(searchTerm), managedObjectContext: managedObjectContext, tableView: self.tableView)
+            self.tableView.reloadData()
+            
+            
+            
+//            client.search(withTerm: searchTerm, at: coordinate) { [weak self] result in
+//                switch result {
+//                case .success(let businesses):
+//                    self?.dataSource.update(with: businesses)
+//                    self?.tableView.reloadData()
+//
+//                    self?.mapView.removeAnnotations(self!.mapView.annotations)
+//                    self?.mapView.addAnnotations(businesses)
+//                case .failure(let error):
+//                    print(error)
+//                }
+//            }
+        }
+    }
+}
+

@@ -94,7 +94,6 @@ extension LocationController: LocationManagerDelegate {
     func obtainedCoordinates(_ coordinate: Coordinate) {
         self.coordinate = coordinate
         adjustMap(with: coordinate)
-        print(coordinate)
     }
     
     func failedWithError(_ error: LocationError) {
