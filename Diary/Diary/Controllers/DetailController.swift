@@ -75,6 +75,7 @@ class DetailController: UIViewController {
             
             self.coordinate = Coordinate(latitude: note.latitude, longitude: note.longitude)
             smiley = note.smiley
+            locationDescription = note.locationDescription
             displaySmiley()
             
             if let photos = note.photos {
