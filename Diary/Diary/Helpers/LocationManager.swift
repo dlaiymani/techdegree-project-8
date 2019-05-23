@@ -70,6 +70,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             permissionsDelegate?.authorizationSucceeded()
+            requestLocation()
         } else {
             permissionsDelegate?.authorizationFailedWithStatus(status)
         }
