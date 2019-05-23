@@ -30,6 +30,7 @@ class MasterController: UITableViewController {
         let newButton = UIBarButtonItem(image: UIImage(named: "Icn_write"), style: .done, target: self, action: #selector(MasterController.launchDetailController))
         navigationItem.rightBarButtonItem = newButton
         setupSearchBar()
+        searchController.searchBar.delegate = self
 
         iconQuickNote.layer.cornerRadius = iconQuickNote.frame.height/2
         iconQuickNote.clipsToBounds = true
@@ -120,22 +121,17 @@ extension MasterController: UISearchResultsUpdating {
         if !searchTerm.isEmpty {
             dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequestWithText(searchTerm), managedObjectContext: managedObjectContext, tableView: self.tableView)
             self.tableView.reloadData()
-            
-            
-            
-//            client.search(withTerm: searchTerm, at: coordinate) { [weak self] result in
-//                switch result {
-//                case .success(let businesses):
-//                    self?.dataSource.update(with: businesses)
-//                    self?.tableView.reloadData()
-//
-//                    self?.mapView.removeAnnotations(self!.mapView.annotations)
-//                    self?.mapView.addAnnotations(businesses)
-//                case .failure(let error):
-//                    print(error)
-//                }
-//            }
         }
     }
 }
 
+
+extension MasterController: UISearchBarDelegate {
+    
+    
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)
+        self.tableView.reloadData()
+    }
+}
