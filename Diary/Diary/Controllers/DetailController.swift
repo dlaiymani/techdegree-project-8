@@ -13,13 +13,17 @@ import MapKit
 class DetailController: UIViewController {
     
     
-    @IBOutlet weak var textTextField: UITextField!
+   // @IBOutlet weak var textTextField: UITextField!
+    
+    @IBOutlet weak var textTextField: UITextView!
+    
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var badButton: UIButton!
     @IBOutlet weak var averageButton: UIButton!
     @IBOutlet weak var goodButton: UIButton!
     @IBOutlet weak var smileyImageView: UIImageView!
     
+    @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var photosCollectionView: UICollectionView!
     
     var managedObjectContext: NSManagedObjectContext!
@@ -52,7 +56,7 @@ class DetailController: UIViewController {
         photosCollectionView.dataSource = dataSource
         photosCollectionView.delegate = self
         configureView()
-        
+
         selectedImage.layer.cornerRadius = selectedImage.frame.height/2
         selectedImage.clipsToBounds = true
     }
@@ -61,13 +65,16 @@ class DetailController: UIViewController {
     func configureView() {
         locationLabel.text = locationDescription
         
+        
         if let note = note {
             textTextField.text = note.text
             locationLabel.text = note.locationDescription
+            if (note.latitude != 0.0 && note.longitude != 0.0) {
+                locationButton.setTitle(" Change Location", for: .normal)
+            }
             
             self.coordinate = Coordinate(latitude: note.latitude, longitude: note.longitude)
             smiley = note.smiley
-            print(smiley)
             displaySmiley()
             
             if let photos = note.photos {
@@ -79,6 +86,13 @@ class DetailController: UIViewController {
                 }
             }
             photosCollectionView.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if (coordinate.latitude != 0.0 && coordinate.longitude != 0.0) {
+            locationButton.setTitle(" Change Location", for: .normal)
         }
     }
     

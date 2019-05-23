@@ -15,7 +15,7 @@ class MasterController: UITableViewController {
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var quickNote: UITextField!
-    @IBOutlet weak var dateOfTheDay: UILabel!
+    @IBOutlet weak var iconQuickNote: UIImageView!
     
     lazy var dataSource: DataSource = {
         return DataSource(tableView: self.tableView, context: self.managedObjectContext)
@@ -27,10 +27,12 @@ class MasterController: UITableViewController {
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         let newButton = UIBarButtonItem(image: UIImage(named: "Icn_write"), style: .done, target: self, action: #selector(MasterController.launchDetailController))
         navigationItem.rightBarButtonItem = newButton
-        dateOfTheDay.text = Date().dateOfTheDay()
 
+        iconQuickNote.layer.cornerRadius = iconQuickNote.frame.height/2
+        iconQuickNote.clipsToBounds = true
+        
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 150
+        tableView.estimatedRowHeight = 300
 
     }
     
@@ -67,7 +69,6 @@ class MasterController: UITableViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let note = dataSource.object(at: indexPath)
                 updateNoteController.note = note
-                print(note.smiley)
                 updateNoteController.managedObjectContext = self.managedObjectContext
             }
         }
