@@ -20,6 +20,7 @@
 		AA37EAF92293FBA800660449 /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA37EAF72293FBA800660449 /* Diary.xcdatamodeld */; };
 		AA80BF1322968B7800ABE80D /* UIImage+Resizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA80BF1222968B7800ABE80D /* UIImage+Resizing.swift */; };
 		AA80BF152296965000ABE80D /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA80BF142296965000ABE80D /* PhotoDataSource.swift */; };
+		AA80BF172298377D00ABE80D /* AlertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA80BF162298377D00ABE80D /* AlertError.swift */; };
 		AA9D477D2293FF95002C5419 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9D477C2293FF95002C5419 /* DataSource.swift */; };
 		AA9D478322940109002C5419 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9D478222940109002C5419 /* CoreDataStack.swift */; };
 		AA9D478522940346002C5419 /* NoteFetchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9D478422940346002C5419 /* NoteFetchResultsController.swift */; };
@@ -50,6 +51,7 @@
 		AA37EAF82293FBA800660449 /* Diary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diary.xcdatamodel; sourceTree = "<group>"; };
 		AA80BF1222968B7800ABE80D /* UIImage+Resizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resizing.swift"; sourceTree = "<group>"; };
 		AA80BF142296965000ABE80D /* PhotoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
+		AA80BF162298377D00ABE80D /* AlertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertError.swift; sourceTree = "<group>"; };
 		AA9D477C2293FF95002C5419 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		AA9D478222940109002C5419 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		AA9D478422940346002C5419 /* NoteFetchResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFetchResultsController.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				AA9D479B22941F27002C5419 /* Date+Extension.swift */,
 				AA9D479D2295223C002C5419 /* PhotoPickerManager.swift */,
 				AA80BF1222968B7800ABE80D /* UIImage+Resizing.swift */,
+				AA80BF162298377D00ABE80D /* AlertError.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				AA9D477D2293FF95002C5419 /* DataSource.swift in Sources */,
 				AA9D479E2295223C002C5419 /* PhotoPickerManager.swift in Sources */,
 				AA37EAF92293FBA800660449 /* Diary.xcdatamodeld in Sources */,
+				AA80BF172298377D00ABE80D /* AlertError.swift in Sources */,
 				AA37EAF42293F9FA00660449 /* MasterController.swift in Sources */,
 				AA9D47A42295436C002C5419 /* PhotosFetchedResultsController.swift in Sources */,
 				AA37EAF22293F9BA00660449 /* LocationController.swift in Sources */,

@@ -15,6 +15,7 @@ enum LocationError: Error {
     case unknownError
     case disallowedByUser
     case unableToFindLocation
+    case noMatchingAddressFound
 }
 
 // The authorization delegate protocol
@@ -28,7 +29,6 @@ protocol LocationManagerDelegate: class {
     func obtainedCoordinates(_ coordinate: Coordinate)
     func failedWithError(_ error: LocationError)
 }
-
 
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
