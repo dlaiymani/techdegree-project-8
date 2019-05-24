@@ -17,6 +17,7 @@ class MasterController: UITableViewController {
     @IBOutlet weak var quickNote: UITextField!
     @IBOutlet weak var iconQuickNote: UIImageView!
     
+    var topViewHeight = 0
     let searchController = UISearchController(searchResultsController: nil)
     
     lazy var dataSource: DataSource = {
@@ -128,10 +129,25 @@ extension MasterController: UISearchResultsUpdating {
 
 extension MasterController: UISearchBarDelegate {
     
-    
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)
+        topView.frame.size.height = CGFloat(topViewHeight)
+        topView.isHidden = false
         self.tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+        topViewHeight = Int(topView.frame.size.height)
+        topView.frame.size.height=0
+        topView.isHidden = true
+        if let text = searchBar.text {
+            if text.isEmpty {
+                dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)
+                self.tableView.reloadData()
+            }
+        } else {
+            print("ya")
+        }
     }
 }
