@@ -31,14 +31,13 @@ class DetailController: UIViewController {
     var coordinate = Coordinate(latitude: 0.0, longitude: 0.0)
     var locationDescription = "📍 No Location"
     var smiley = "none"
+    var update:Bool = false // true if a cell has been tapped in the Master Controller
     
-    var update:Bool = false
-    
-    var note: Note?
+    var note: Note? // The note to create or to update
 
-   // var dataSource: [UIImage] = []
     @IBOutlet weak var selectedImage: UIImageView!
     
+    // Data Source for the Image CollectionView
     lazy var dataSource: PhotoDataSource = {
         return PhotoDataSource(data: [], collectionView: self.photosCollectionView)
     }()
@@ -65,19 +64,22 @@ class DetailController: UIViewController {
     func configureView() {
         locationLabel.text = locationDescription
         
-        
         if let note = note {
             textTextField.text = note.text
+            
+            // location info management
             locationLabel.text = note.locationDescription
             if (note.latitude != 0.0 && note.longitude != 0.0) {
                 locationButton.setTitle(" Change Location", for: .normal)
             }
-            
             self.coordinate = Coordinate(latitude: note.latitude, longitude: note.longitude)
-            smiley = note.smiley
             locationDescription = note.locationDescription
+            
+            // Smiley Management
+            smiley = note.smiley
             displaySmiley()
             
+            // Main photo management
             if let photos = note.photos {
                 for photo in photos {
                     dataSource.appendData(photo.image)
@@ -91,7 +93,6 @@ class DetailController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         if (coordinate.latitude != 0.0 && coordinate.longitude != 0.0) {
             locationButton.setTitle(" Change Location", for: .normal)
         }
@@ -106,7 +107,7 @@ class DetailController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    
+    // Svae button tapped
     @IBAction func save(_ sender: Any) {
         guard let text = textTextField.text, !text.isEmpty else {
             return
@@ -115,10 +116,13 @@ class DetailController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
         
+        // if update: delete the note and create a new one. Not sure it is the best way to do
+        // but don't figure out to use the setValue methods
         if update {
             managedObjectContext.delete(self.note!)
         }
         
+        // create a new note only if text is non empty
         let note = NSEntityDescription.insertNewObject(forEntityName: "Note", into: managedObjectContext) as! Note
         
         if let text = textTextField.text {
@@ -128,13 +132,13 @@ class DetailController: UIViewController {
             note.latitude = coordinate.latitude
             note.locationDescription = locationDescription
             note.smiley = smiley
-            print(smiley)
-            if dataSource.numberOfElements() > 0 {
+            if dataSource.numberOfElements() > 0 { // If there are photos
                 var savedPhotos: [Photo] = []
                 for image in dataSource.data {
                     let pngImage = image.pngData()
                     let pngSelectedImage = selectedImage.image?.pngData()
                     
+                    // main photo management
                     if pngImage == pngSelectedImage {
                         savedPhotos.append(Photo.withImage(image, isMainPhoto: true, in: managedObjectContext))
                     } else {
@@ -150,6 +154,8 @@ class DetailController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    
+    // MARK: Smiley management. Would be better with enum but CoreData requires String
     
     func displaySmiley() {
         switch smiley {
@@ -198,6 +204,9 @@ class DetailController: UIViewController {
         }
     }
     
+    //MARK: - Navigation
+    
+    // back from location controller
     @IBAction func unwindFromLocationController(_ segue: UIStoryboardSegue) {
             self.locationLabel.text = "📍 \(locationDescription)"
     }
@@ -205,18 +214,17 @@ class DetailController: UIViewController {
 
 
 extension DetailController: PhotoPickerManagerDelegate {
-    
+    // An image has been picked
     func manager(_ manager: PhotoPickerManager, didPickImage image: UIImage) {
         manager.dismissPhotoPicker(animated: true) {
             
+            // Resizing of the image at a lower size
             let imageWidth = image.size.width
             let imageHeight = image.size.height
             let size = CGSize(width: imageWidth*0.25, height: imageHeight*0.25)
             guard let resizedImage = image.resized(to: size) else { return }
             
             self.dataSource.appendData(resizedImage)
-            
-           // self.managedObjectContext.saveChanges()
             
             self.photosCollectionView.reloadData()
             
@@ -228,6 +236,7 @@ extension DetailController: PhotoPickerManagerDelegate {
 
 extension DetailController: UICollectionViewDelegate {
     
+    // An image has been tapped in the CollectionView -> main image
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let photo = dataSource.object(at: indexPath)
