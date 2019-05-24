@@ -24,7 +24,9 @@ class LocationController: UIViewController {
             if let coordinate = coordinate {
                 let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 geocoder.reverseGeocodeLocation(location) { placemarks, error in
-                    if let _ = error {
+                    if let error = error {
+                        print(error)
+
                         let alertError = AlertError(error: .unableToFindLocation, on: self)
                     } else {
                         if let placemarks = placemarks, let placemark = placemarks.first, let name = placemark.name, let locality = placemark.locality, let adminArea = placemark.administrativeArea {
