@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Data source for the Detail TableView i.e. collection view of Photo
 class PhotoDataSource: NSObject, UICollectionViewDataSource {
     
     var data: [UIImage]

@@ -19,7 +19,6 @@ class MasterController: UITableViewController {
     
     var topViewHeight = 0
     let searchController = UISearchController(searchResultsController: nil)
-    var textFieldSearchController: UITextField?
     
     lazy var dataSource: DataSource = {
         return DataSource(tableView: self.tableView, context: self.managedObjectContext)
@@ -28,12 +27,14 @@ class MasterController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = dataSource
+        // Left and right bar button
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         let newButton = UIBarButtonItem(image: UIImage(named: "Icn_write"), style: .done, target: self, action: #selector(MasterController.launchDetailController))
         navigationItem.rightBarButtonItem = newButton
+        // Search controller
         setupSearchBar()
         searchController.searchBar.delegate = self
-
+        // Quick note icon
         iconQuickNote.layer.cornerRadius = iconQuickNote.frame.height/2
         iconQuickNote.clipsToBounds = true
         
@@ -69,26 +70,27 @@ class MasterController: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NewNoteSegue" {
+        if segue.identifier == "NewNoteSegue" { // New note button tapped
             
             let navigatioController = segue.destination as! UINavigationController
             let addNoteController = navigatioController.topViewController as! DetailController
             
             addNoteController.managedObjectContext = self.managedObjectContext
             addNoteController.update = false
-        } else if segue.identifier == "showDetail" {
+        } else if segue.identifier == "showDetail" { // A cell (a note) has been tapped
             let navigatioController = segue.destination as! UINavigationController
             let updateNoteController = navigatioController.topViewController as! DetailController
             updateNoteController.update = true
-            if let indexPath = tableView.indexPathForSelectedRow {
+            if let indexPath = tableView.indexPathForSelectedRow { // The tapped cell
                 let note = dataSource.object(at: indexPath)
                 updateNoteController.note = note
                 updateNoteController.managedObjectContext = self.managedObjectContext
             }
         }
-            
     }
     
+    
+    // Quick note. When the user hits return, a new note is created with only a text and a creation date
     @IBAction func returnTapped(_ sender: UITextField) {
         guard let text = quickNote.text, !text.isEmpty else {
             return
@@ -109,6 +111,7 @@ class MasterController: UITableViewController {
             note.photos = nil
             managedObjectContext.saveChanges()
             
+            // Reset the quick note
             quickNote.text = nil
             quickNote.placeholder = "Quick note"
             sender.resignFirstResponder()
@@ -116,7 +119,11 @@ class MasterController: UITableViewController {
     }
 }
 
+// MARK: SearchController management
+
 extension MasterController: UISearchResultsUpdating, UITextFieldDelegate {
+    // When the search controller is activated i.e. the user enters a text,
+    // we change the fetchResultController to retreive the corresponding notes
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchTerm = searchController.searchBar.text else { return }
         
@@ -126,34 +133,37 @@ extension MasterController: UISearchResultsUpdating, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)
-        topView.frame.size.height = CGFloat(topViewHeight)
-        topView.isHidden = false
-        tableView.reloadData()
-        return true
-    }
+//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+//        dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)
+//        topView.frame.size.height = CGFloat(topViewHeight)
+//        topView.isHidden = false
+//        tableView.reloadData()
+//        return true
+//    }
     
 }
 
 
+// SearchBar delegate
 extension MasterController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)
+        // The quick note view is displayed
         topView.frame.size.height = CGFloat(topViewHeight)
         topView.isHidden = false
         self.tableView.reloadData()
     }
     
+    // When the user enter some text, the quick note view is dismissed
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        
         topViewHeight = Int(topView.frame.size.height)
         topView.frame.size.height=0
         topView.isHidden = true
         tableView.reloadData()
     }
     
+    // Cross button tapped
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)

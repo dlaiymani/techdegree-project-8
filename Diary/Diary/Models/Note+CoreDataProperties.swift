@@ -36,12 +36,12 @@ extension Note {
     }
 
     
-    @NSManaged public var latitude: Double // can figure out to put these properties optional
+    @NSManaged public var latitude: Double // can figure out to put these properties as optional
     @NSManaged public var longitude: Double
     @NSManaged public var modificationDate: String
     @NSManaged public var text: String
     @NSManaged public var locationDescription: String
-    @NSManaged public var smiley: String
+    @NSManaged public var smiley: String // would be better to use an enum
     @NSManaged public var photos: Set<Photo>?
   //  @NSManaged public var mainPhoto: Photo?
 

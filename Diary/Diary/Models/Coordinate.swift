@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 
+// The coordinate type
 struct Coordinate {
     let latitude: Double
     let longitude: Double
