@@ -12,17 +12,13 @@ import MapKit
 
 class DetailController: UIViewController {
     
-    
-   // @IBOutlet weak var textTextField: UITextField!
-    
+  
     @IBOutlet weak var textTextField: UITextView!
-    
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var badButton: UIButton!
     @IBOutlet weak var averageButton: UIButton!
     @IBOutlet weak var goodButton: UIButton!
     @IBOutlet weak var smileyImageView: UIImageView!
-    
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var photosCollectionView: UICollectionView!
     
@@ -230,12 +226,10 @@ extension DetailController: PhotoPickerManagerDelegate {
             
         }
     }
-    
 }
 
 
 extension DetailController: UICollectionViewDelegate {
-    
     // An image has been tapped in the CollectionView -> main image
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -247,5 +241,4 @@ extension DetailController: UICollectionViewDelegate {
             selectedImage.image = photo
         }
     }
-    
 }

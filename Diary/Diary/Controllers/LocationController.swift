@@ -17,8 +17,9 @@ class LocationController: UIViewController {
         return LocationManager(delegate: self, permissionsDelegate: nil)
     }()
     
+    // Find an address from coordinates
     var geocoder = CLGeocoder()
-    var coordinate: Coordinate? {
+    var coordinate: Coordinate? { // When coordinates are set the perform geocoding
         didSet {
             if let coordinate = coordinate {
                 let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
@@ -33,25 +34,24 @@ class LocationController: UIViewController {
                         }
                     }
                 }
-
             }
         }
     }
     
     var locationDescription = "📍 No Location"
     
+    // Check location authorization
     var isAuthorized: Bool {
         let isAuthorizedForLocation = LocationManager.isAuthorized
         return isAuthorizedForLocation
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     
+    // Check permission or request the current location
     override func viewDidAppear(_ animated: Bool) {
         if isAuthorized {
             locationManager.requestLocation()
@@ -60,9 +60,7 @@ class LocationController: UIViewController {
         }
     }
     
-    
     func checkPermissions() {
-        
         do {
             try locationManager.requestLocationAuthorization()
         } catch LocationError.disallowedByUser {
@@ -74,6 +72,8 @@ class LocationController: UIViewController {
     }
     
     // MARK: Navigation
+    
+    // Back to Detail Controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SaveLocationSegue" {
             let detailViewController = segue.destination as! DetailController
@@ -83,9 +83,6 @@ class LocationController: UIViewController {
             }
         }
     }
-    
-    
-    
 }
 
 
@@ -104,11 +101,11 @@ extension LocationController: LocationManagerDelegate {
 
 // MARK: - MapKit
 extension LocationController {
+    // Adjust the map around the current location and display an annotation at this location
     func adjustMap(with coordinate: Coordinate) {
         let coordinate2D = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let region = MKCoordinateRegion.init(center: coordinate2D, latitudinalMeters: 2500, longitudinalMeters: 2500)
         
-        // let region = MKCoordinateRegion.init(center: coordinate2D, span: span)
         mapView.setRegion(region, animated: true)
         let myAnnotation: MKPointAnnotation = MKPointAnnotation()
         myAnnotation.coordinate = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
