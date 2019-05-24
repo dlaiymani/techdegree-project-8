@@ -9,6 +9,7 @@
 import UIKit
 
 
+// Resizing an image at a smaller size, since only "vignettes" are used.
 extension UIImage {
     func resized(to size: CGSize) -> UIImage? {
         let rect = CGRect(origin: .zero, size: size)

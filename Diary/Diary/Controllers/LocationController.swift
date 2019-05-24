@@ -33,7 +33,7 @@ class LocationController: UIViewController {
                         }
                     }
                 }
-                
+
             }
         }
     }

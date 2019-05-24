@@ -9,6 +9,7 @@
 import Foundation
 
 
+// Return a formatted string for the date
 extension Date {
     func dateOfTheDay() -> String {
         let dateFormatter = DateFormatter()

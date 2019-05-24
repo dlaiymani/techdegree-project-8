@@ -36,7 +36,6 @@ class PhotoPickerManager: NSObject {
     private func configure() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePickerController.sourceType = .camera
-           // imagePickerController.cameraDevice = .front
         } else {
             imagePickerController.sourceType = .photoLibrary
         }
@@ -48,7 +47,6 @@ class PhotoPickerManager: NSObject {
 }
 
 extension PhotoPickerManager: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
