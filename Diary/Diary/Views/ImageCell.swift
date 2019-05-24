@@ -8,6 +8,7 @@
 
 import UIKit
 
+// The collectioview cell of the DetailController for displaying Photos
 class ImageCell: UICollectionViewCell {
     
     static let reuseIdentifier = String(describing: ImageCell.self)

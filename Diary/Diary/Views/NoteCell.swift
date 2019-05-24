@@ -8,6 +8,7 @@
 
 import UIKit
 
+// The tableview cell of the MasterController for displaying Notes
 class NoteCell: UITableViewCell {
     
     

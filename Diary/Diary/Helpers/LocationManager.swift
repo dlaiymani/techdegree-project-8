@@ -10,21 +10,26 @@ import Foundation
 import CoreLocation
 
 
+// Possible location error
 enum LocationError: Error {
     case unknownError
     case disallowedByUser
     case unableToFindLocation
 }
 
+// The authorization delegate protocol
 protocol LocationPermissionsDelegate: class { // the delegate that adopts the protocol must be a class
     func authorizationSucceeded()
     func authorizationFailedWithStatus(_ status: CLAuthorizationStatus)
 }
 
+// The location delegate protocol
 protocol LocationManagerDelegate: class {
     func obtainedCoordinates(_ coordinate: Coordinate)
     func failedWithError(_ error: LocationError)
 }
+
+
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
@@ -32,6 +37,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     weak var permissionsDelegate: LocationPermissionsDelegate?
     weak var delegate: LocationManagerDelegate?
     
+    // State of the authorization
     static var isAuthorized: Bool {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
@@ -50,6 +56,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         
     }
     
+    // Function which checks and asks the location authorization to the user
     func requestLocationAuthorization() throws {
         let authorizationStatus = CLLocationManager.authorizationStatus()
         
@@ -62,11 +69,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // Function which initiates the location process
     func requestLocation() {
         manager.startUpdatingLocation()
-        // manager.requestLocation()
     }
     
+    // If the authorization has changed
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             permissionsDelegate?.authorizationSucceeded()
@@ -76,6 +84,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // Location problem
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         guard let error = error as? CLError else {
             delegate?.failedWithError(.unknownError)
@@ -92,6 +101,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // Location has changed so get the new coordinates
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {
             delegate?.failedWithError(.unableToFindLocation)
@@ -100,6 +110,5 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         
         let coordinate = Coordinate(location: location)
         delegate?.obtainedCoordinates(coordinate)
-        
     }
 }
