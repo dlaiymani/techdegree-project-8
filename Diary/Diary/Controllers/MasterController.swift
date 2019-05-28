@@ -34,6 +34,9 @@ class MasterController: UITableViewController {
         // Search controller
         setupSearchBar()
         searchController.searchBar.delegate = self
+        searchController.searchBar.tintColor = .black
+        let appearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        appearance.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         // Quick note icon
         iconQuickNote.layer.cornerRadius = iconQuickNote.frame.height/2
         iconQuickNote.clipsToBounds = true
@@ -132,14 +135,6 @@ extension MasterController: UISearchResultsUpdating, UITextFieldDelegate {
             self.tableView.reloadData()
         }
     }
-    
-//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-//        dataSource.fetchResultsController = NoteFetchResultsController(fetchRequest: Note.fetchRequest(), managedObjectContext: managedObjectContext, tableView: self.tableView)
-//        topView.frame.size.height = CGFloat(topViewHeight)
-//        topView.isHidden = false
-//        tableView.reloadData()
-//        return true
-//    }
     
 }
 
