@@ -390,9 +390,7 @@
                             <outlet property="delegate" destination="mI0-8E-qEe" id="k5O-sS-VW9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Diary" id="2BH-Kc-Vcj">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="HZT-A5-Ib2"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Diary" id="2BH-Kc-Vcj"/>
                     <connections>
                         <outlet property="iconQuickNote" destination="g5x-6X-OZ6" id="nXT-60-QXS"/>
                         <outlet property="quickNote" destination="Vy9-PR-KMR" id="yHR-Gw-2fL"/>

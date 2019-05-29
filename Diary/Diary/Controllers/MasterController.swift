@@ -29,6 +29,7 @@ class MasterController: UITableViewController {
         tableView.dataSource = dataSource
         // Left and right bar button
         self.navigationItem.leftBarButtonItem = self.editButtonItem
+        self.editButtonItem.width = 60
         let newButton = UIBarButtonItem(image: UIImage(named: "Icn_write"), style: .done, target: self, action: #selector(MasterController.launchDetailController))
         navigationItem.rightBarButtonItem = newButton
         // Search controller
